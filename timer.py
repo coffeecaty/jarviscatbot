@@ -31,6 +31,13 @@ def start(bot, update):
     
     update.message.reply_text('您好，我是summy专属的JarvisCat，我会代替coffeecaty对summy进行全方位照顾，如果你不是summy本人...你想看他俩秀恩爱我也没意见啊～～～～')
 
+def help(bot, update):
+    import helptext
+    update.message.reply_text(helptext.help)
+
+def miao(bot, update):
+    
+    update.message.reply_text('喵？')
 
 def alarm(bot, job):
     """Function to send the alarm message"""
@@ -83,7 +90,8 @@ def main():
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", start))
+    dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("miao", miao))
     dp.add_handler(CommandHandler("set", set,
                                   pass_args=True,
                                   pass_job_queue=True,
