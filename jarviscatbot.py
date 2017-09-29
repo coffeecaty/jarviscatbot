@@ -33,7 +33,6 @@ def love(bot, update):
 def alarm(bot, job):
     """Function to send the alarm message"""
     bot.send_message(job.context, text='小熊起床啦！！！！～')
-    del chat_data['job']
 
 
 def set(bot, update, args, job_queue, chat_data):
@@ -41,7 +40,9 @@ def set(bot, update, args, job_queue, chat_data):
     chat_id = update.message.chat_id
     try:
         # args[0] should contain the time for the timer in seconds
-        due = int(args[0])
+        while len(args)<4:
+            args.append('0')
+        due = int(args[0])+60*(int(args[1])+60*(int(args[2])+24*int(args[3])))
         if due < 0:
             update.message.reply_text('大猫慢慢，不是闪电侠，不能穿越时光。')
             return
@@ -53,7 +54,7 @@ def set(bot, update, args, job_queue, chat_data):
         update.message.reply_text('好的大熊，没问题大熊！')
 
     except (IndexError, ValueError):
-        update.message.reply_text('请用/set 时间（秒）设置闹钟喵。')
+        update.message.reply_text('请用/set 设置时间（秒 分 时 天，以空格分隔，可有后向前缺省）')
 
 
 def unset(bot, update, chat_data):
@@ -75,7 +76,13 @@ def error(bot, update, error):
 
 
 def main():
-    updater = Updater("465976826:AAGh1cIXxirgmsc9Wi6fb-4LrISRWCdkTzI")
+    try:
+       import config
+    except ImportExcept:
+       print('no config file')
+       import sys
+       sys.exit(0)
+    updater = Updater(config.token)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher

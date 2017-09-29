@@ -87,7 +87,8 @@ def error(bot, update, error):
 
 
 def main():
-    updater = Updater("465976826:AAGh1cIXxirgmsc9Wi6fb-4LrISRWCdkTzI")
+    import config
+    updater = Updater(config.token)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
