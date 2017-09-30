@@ -1,5 +1,6 @@
 from telegram.ext import Updater
 from logprint import log
+import config
 
 def start(bot, update):
     log(update)
@@ -13,8 +14,15 @@ def miao(bot, update):
     log(update)
     update.message.reply_text('喵？')
     
-def unknow(bot,update):
+def message(bot,update):
     log(update)
-    bot.sendMessage(update.message.chat_id, text='小猫虽然听不懂你在说什么，但是小猫爱大熊！', reply_to_message_id=update.message.message_id)
+    if update.message.chat_id == config.yourid:    
+     bot.sendMessage(config.loverid, text=update.message.text)
+    elif update.message.chat_id == config.loverid:
+     bot.sendMessage(config.yourid, text=update.message.text)   
+     bot.sendMessage(update.message.chat_id, text='小猫虽然听不懂你在说什么，但是小猫爱大熊！小猫会问问大猫怎么回答你的！', reply_to_message_id=update.message.message_id)
+    else:
+     bot.sendMessage(update.message.chat_id, text='小猫虽然听不懂你在说什么，但是小猫爱大熊！', reply_to_message_id=update.message.message_id)
+     bot.sendMessage(update.message.chat_id, text='如果想给coffeecaty或者summyxy留言，请使用/stc（say to coffeecaty）或者/sts（say to summyxy）')
   
 

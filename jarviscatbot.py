@@ -26,7 +26,7 @@ def main():
     dp.add_handler(CommandHandler("start", base.start))
     dp.add_handler(CommandHandler("help", base.help))
     dp.add_handler(CommandHandler("miao", base.miao))
-    dp.add_handler(MessageHandler([Filters.text], base.unknow))
+    dp.add_handler(MessageHandler([Filters.text], base.message))
 
     # from love
     dp.add_handler(CommandHandler("love", love.love))
@@ -34,7 +34,6 @@ def main():
     dp.add_handler(CommandHandler("我爱你", love.love))
     dp.add_handler(CommandHandler("爱你", love.love))
     dp.add_handler(CommandHandler("好喜欢你", love.love))
-    dp.add_handler(CommandHandler("sty", love.saytolove))
 
     # from timer
     dp.add_handler(CommandHandler("set", timer.set,
