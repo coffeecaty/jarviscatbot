@@ -9,11 +9,12 @@ def alarm(bot, job):
 
 def set(bot, update, args, job_queue, chat_data):
     """Adds a job to the queue"""
-    log(update)
     chat_id = update.message.chat_id
     try:
         # args[0] should contain the time for the timer in seconds
-        due = int(args[0])
+        while len(args)<4:
+            args.append('0')
+        due = int(args[0])+60*(int(args[1])+60*(int(args[2])+24*int(args[3])))
         if due < 0:
             update.message.reply_text('大猫慢慢，不是闪电侠，不能穿越时光。')
             return
@@ -25,7 +26,7 @@ def set(bot, update, args, job_queue, chat_data):
         update.message.reply_text('好的大熊，没问题大熊！')
 
     except (IndexError, ValueError):
-        update.message.reply_text('请用/set 时间（秒）设置闹钟喵。')
+        update.message.reply_text('请用/set 设置时间（秒 分 时 天，以空格分隔，可有后向前缺省）')
 
 
 def unset(bot, update, chat_data):

@@ -22,10 +22,11 @@ def main():
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
-    # from main
-    dp.add_handler(CommandHandler("start", main.start))
-    dp.add_handler(CommandHandler("help", main.help))
-    dp.add_handler(CommandHandler("miao", main.miao))
+    # from base
+    dp.add_handler(CommandHandler("start", base.start))
+    dp.add_handler(CommandHandler("help", base.help))
+    dp.add_handler(CommandHandler("miao", base.miao))
+    dp.add_handler(MessageHandler([Filters.text], base.unknow))
 
     # from love
     dp.add_handler(CommandHandler("love", love.love))
@@ -40,7 +41,7 @@ def main():
                                   pass_job_queue=True,
                                   pass_chat_data=True))
     dp.add_handler(CommandHandler("unset", timer.unset, pass_chat_data=True))
-    dp.add_handler(MessageHandler([Filters.text], unknow))
+    
 
 
     # Start the Bot
