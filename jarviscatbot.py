@@ -4,7 +4,7 @@
 
 from telegram.ext import Updater, CommandHandler, Job
 import logging
-
+import timer
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -29,46 +29,8 @@ def miao(bot, update):
 def love(bot, update):
     
     update.message.reply_text('我也爱大熊！')
-    
-def alarm(bot, job):
-    """Function to send the alarm message"""
-    bot.send_message(job.context, text='小熊起床啦！！！！～')
-
-
-def set(bot, update, args, job_queue, chat_data):
-    """Adds a job to the queue"""
-    chat_id = update.message.chat_id
-    try:
-        # args[0] should contain the time for the timer in seconds
-        while len(args)<4:
-            args.append('0')
-        due = int(args[0])+60*(int(args[1])+60*(int(args[2])+24*int(args[3])))
-        if due < 0:
-            update.message.reply_text('大猫慢慢，不是闪电侠，不能穿越时光。')
-            return
-
-        # Add job to queue
-        job = job_queue.run_once(alarm, due, context=chat_id)
-        chat_data['job'] = job
-
-        update.message.reply_text('好的大熊，没问题大熊！')
-
-    except (IndexError, ValueError):
-        update.message.reply_text('请用/set 设置时间（秒 分 时 天，以空格分隔，可有后向前缺省）')
-
-
-def unset(bot, update, chat_data):
-    """Removes the job if the user changed their mind"""
-
-    if 'job' not in chat_data:
-        update.message.reply_text('诶？你有让我叫你吗？？？')
-        return
-
-    job = chat_data['job']
-    job.schedule_removal()
-    del chat_data['job']
-
-    update.message.reply_text('好的大熊！你继续睡吧')
+def unknow(bot,update):
+    bot.sendMessage(update.message.chat_id, text='小猫虽然听不懂你在说什么，但是我爱大熊！', reply_to_message_id=update.message.message_id)
 
 
 def error(bot, update, error):
@@ -96,11 +58,12 @@ def main():
     dp.add_handler(CommandHandler("我爱你", love))
     dp.add_handler(CommandHandler("爱你", love))
     dp.add_handler(CommandHandler("好喜欢你", love))
-    dp.add_handler(CommandHandler("set", set,
+    dp.add_handler(CommandHandler("set", timer.set,
                                   pass_args=True,
                                   pass_job_queue=True,
                                   pass_chat_data=True))
-    dp.add_handler(CommandHandler("unset", unset, pass_chat_data=True))
+    dp.add_handler(CommandHandler("unset", timer.unset, pass_chat_data=True))
+    dp.add_handler(MessageHandler([Filters.text], unknow))
 
     # log all errors
     dp.add_error_handler(error)
