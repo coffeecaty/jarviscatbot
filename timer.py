@@ -1,5 +1,5 @@
-from telegram.ext import Updater, CommandHandler, Job
-
+from telegram.ext import Updater, Job
+from logprint import log
 
     
 def alarm(bot, job):
@@ -9,6 +9,7 @@ def alarm(bot, job):
 
 def set(bot, update, args, job_queue, chat_data):
     """Adds a job to the queue"""
+    log(update)
     chat_id = update.message.chat_id
     try:
         # args[0] should contain the time for the timer in seconds
@@ -29,7 +30,7 @@ def set(bot, update, args, job_queue, chat_data):
 
 def unset(bot, update, chat_data):
     """Removes the job if the user changed their mind"""
-
+    log(update)
     if 'job' not in chat_data:
         update.message.reply_text('诶？你有让我叫你吗？？？')
         return
