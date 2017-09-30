@@ -4,7 +4,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 # Define a few command handlers. These usually take the two arguments bot and
 # update. Error handlers also receive the raised TelegramError object in error.
-import main
+import base
 import love
 import timer
 
@@ -34,6 +34,7 @@ def main():
     dp.add_handler(CommandHandler("我爱你", love.love))
     dp.add_handler(CommandHandler("爱你", love.love))
     dp.add_handler(CommandHandler("好喜欢你", love.love))
+    dp.add_handler(CommandHandler("sty", love.saytolove))
 
     # from timer
     dp.add_handler(CommandHandler("set", timer.set,
