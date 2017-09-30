@@ -16,7 +16,7 @@ def main():
        print('no config file')
        import sys
        sys.exit(0)
-    updater = Updater(config.token)
+       config.token)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -27,6 +27,8 @@ def main():
     dp.add_handler(CommandHandler("help", base.help))
     dp.add_handler(CommandHandler("miao", base.miao))
     dp.add_handler(MessageHandler([Filters.text], base.message))
+    dp.add_handler(CommandHandler("stc", base.stc))
+    dp.add_handler(CommandHandler("sts", base.sts))
 
     # from love
     dp.add_handler(CommandHandler("love", love.love))

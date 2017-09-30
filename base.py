@@ -26,3 +26,12 @@ def message(bot,update):
      bot.sendMessage(update.message.chat_id, text='如果想给coffeecaty或者summyxy留言，请使用/stc（say to coffeecaty）或者/sts（say to summyxy）')
   
 
+def stc(bot,update):
+    log(update)
+    update.message.reply_text('已成功为您留言给coffeecaty')
+    bot.sendMessage(config.yourid, text='@'+update.message.from_user.usrname+':'+update.message.text)
+
+def sts(bot,update):
+    log(update)
+    update.message.reply_text('已成功为您留言给summyxy')
+    bot.sendMessage(config.loverid, text='@'+update.message.from_user.usrname+':'+update.message.text)
