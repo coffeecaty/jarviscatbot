@@ -16,7 +16,7 @@ def main():
        print('no config file')
        import sys
        sys.exit(0)
-       config.token)
+    updater=Updater(config.token)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
