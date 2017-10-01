@@ -33,12 +33,24 @@ def message(bot,update):
      bot.sendMessage(update.message.chat_id, text='如果想给coffeecaty或者summyxy留言，请使用/stc（say to coffeecaty）或者/sts（say to summyxy）')
   
 
-def stc(bot,update):
-    log(update) 
+def stc(bot,update,args):
+   log(update)  
+   try:
+    message=''
+    for n in args:
+        message=message+n+' '
     update.message.reply_text('已成功为您留言给coffeecaty')
-    bot.sendMessage(config.yourid,text='from:@'+update.message.from_user.username+':'+update.message.text+' at '+str(update.message.date))
+    bot.sendMessage(config.yourid,text='from:@'+update.message.from_user.username+':'+message+'at '+str(update.message.date))
+   except (IndexError, ValueError):
+        update.message.reply_text('你怎么比小猫还笨！你都没留言我怎么帮你转达。0w0')
 
-def sts(bot,update):
-    log(update)
-    update.message.reply_text('已成功为您留言给summyxy')
-    bot.sendMessage(config.loverid,text='from:@'+update.message.from_user.username+':'+update.message.text+' at '+str(update.message.date))
+def sts(bot,update,args):
+   log(update)  
+   try:
+    message=''
+    for n in args:
+        message=message+n+' '
+    update.message.reply_text('已成功为您留言给summy')
+    bot.sendMessage(config.loverid,text='from:@'+update.message.from_user.username+':'+message+'at '+str(update.message.date))
+   except (IndexError, ValueError):
+        update.message.reply_text('你怎么比小猫还笨！你都没留言我怎么帮你转达。0w0')

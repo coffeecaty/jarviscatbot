@@ -27,8 +27,8 @@ def main():
     dp.add_handler(CommandHandler("help", base.help))
     dp.add_handler(CommandHandler("miao", base.miao))
     dp.add_handler(MessageHandler([Filters.text], base.message))
-    dp.add_handler(CommandHandler("stc", base.stc))
-    dp.add_handler(CommandHandler("sts", base.sts))
+    dp.add_handler(CommandHandler("stc", base.stc,pass_args=True))
+    dp.add_handler(CommandHandler("sts", base.sts,pass_args=True))
 
     # from love
     dp.add_handler(CommandHandler("love", love.love))
