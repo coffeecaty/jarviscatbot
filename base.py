@@ -29,9 +29,9 @@ def message(bot,update):
 def stc(bot,update):
     log(update)
     update.message.reply_text('已成功为您留言给coffeecaty')
-    bot.sendMessage(config.yourid,text='from:@'+update.message.from_user.usrname+':'+update.message.text+'at:'+update.message.date)
+    bot.sendMessage(config.yourid,text='from:@'+update.message.from_user.usrname+':'+update.message.text)
 
 def sts(bot,update):
     log(update)
     update.message.reply_text('已成功为您留言给summyxy')
-    bot.sendMessage(config.loverid,text='from:@'+update.message.from_user.usrname+':'+update.message.text+'at:'+update.message.date)
+    bot.sendMessage(config.loverid,text='from:@'+update.message.from_user.usrname+':'+update.message.text)
