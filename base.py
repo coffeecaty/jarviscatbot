@@ -35,22 +35,49 @@ def message(bot,update):
 
 def stc(bot,update,args):
    log(update)  
-   try:
+   if len(args)>0:
     message=''
     for n in args:
         message=message+n+' '
     update.message.reply_text('已成功为您留言给coffeecaty')
     bot.sendMessage(config.yourid,text='from:@'+update.message.from_user.username+':'+message+'at '+str(update.message.date))
-   except (IndexError, ValueError):
+   else:
         update.message.reply_text('你怎么比小猫还笨！你都没留言我怎么帮你转达。0w0')
 
 def sts(bot,update,args):
    log(update)  
-   try:
+   if len(args)>0:
     message=''
     for n in args:
         message=message+n+' '
     update.message.reply_text('已成功为您留言给summy')
     bot.sendMessage(config.loverid,text='from:@'+update.message.from_user.username+':'+message+'at '+str(update.message.date))
-   except (IndexError, ValueError):
+   else:
         update.message.reply_text('你怎么比小猫还笨！你都没留言我怎么帮你转达。0w0')
+
+def repeat(bot,update,args):
+    log(update)
+    if len(args)==0:
+        update.message.reply_text('你怎么比小猫还笨！你都没说话我怎么重复。0w0')
+    elif len(args)==1:
+        message=args[0]+'/n'+args[0]+'/n'+args[0]
+    else:
+        try:
+            time=int(args[-1])
+            args=args[:-1]
+        except (ValueError):
+            time=3
+        if time<1:
+           update.message.reply_text('1后面是2，1前面是？（掰猫爪爪') 
+        else:    
+           n,m,text=1,1,args[0]
+           while n<len(args):
+               text=text+' '+args[n]
+               n=n+1
+           message=text
+           while m<time:
+               message=message+'/n'+text          
+           update.message.reply_text(message)
+    
+    except (IndexError, ValueError):
+        update.message.reply_text('你怎么比小猫还笨！你都没说话我怎么重复。0w0')

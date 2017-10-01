@@ -11,6 +11,9 @@ def set(bot, update, args, job_queue, chat_data):
     """Adds a job to the queue"""
     chat_id = update.message.chat_id
     try:
+       if len(args)==0:
+        update.message.reply_text('请用/set 设置时间（秒 分 时 天，以空格分隔，可由后向前缺省）')  
+       else:
         # args[0] should contain the time for the timer in seconds
         while len(args)<4:
             args.append('0')
@@ -25,8 +28,8 @@ def set(bot, update, args, job_queue, chat_data):
 
         update.message.reply_text('好的大熊，没问题大熊！')
 
-    except (IndexError, ValueError):
-        update.message.reply_text('请用/set 设置时间（秒 分 时 天，以空格分隔，可有后向前缺省）')
+    except (ValueError):
+        update.message.reply_text('请用/set 设置时间（秒 分 时 天，以空格分隔，可由后向前缺省）')
 
 
 def unset(bot, update, chat_data):
