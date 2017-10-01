@@ -4,8 +4,15 @@ import config
 
 def start(bot, update):
     log(update)
-    update.message.reply_text('您好，我是summy专属的JarvisCat，我会代替coffeecaty对summy进行全方位照顾，如果你不是summy本人...你想看他俩秀恩爱我也没意见啊～～～～')
-
+    if update.message.chat_id == config.yourid:
+     update.message.reply_text('欢迎回来，我的大猫主人')
+    elif update.message.chat_id == config.loverid:
+     update.message.reply_text('你好，我最爱的summy，我是你的专属小猫，我会辅助coffeecaty照顾你，说出你的需求，我会尽量满足。小猫还小，会的很少，请有耐心的慢慢教小猫长大哦~')
+    else:
+     if update.message.first_name is not None:
+      update.message.reply_text('您好，'+update.message.from_user.first_name+'，我是辅助coffeecaty照顾summy的专属小猫，虽然也提供一些其他服务，但基本上你通过我只能...看caty秀恩爱啊~~~')
+     else:
+      update.message.reply_text('您好，@'+update.message.from_user.username+'，我是辅助coffeecaty照顾summy的专属小猫，虽然也提供一些其他服务，但基本上你通过我只能...看caty秀恩爱啊~~~')
 def help(bot, update):
     import helptest
     update.message.reply_text(helptest.help)
