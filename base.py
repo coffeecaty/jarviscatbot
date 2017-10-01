@@ -14,8 +14,8 @@ def start(bot, update):
      else:
       update.message.reply_text('您好，@'+update.message.from_user.username+'，我是辅助coffeecaty照顾summy的专属小猫，虽然也提供一些其他服务，但基本上你通过我只能...看caty秀恩爱啊~~~')
 def help(bot, update):
-    import helptest
-    update.message.reply_text(helptest.help)
+    from helptext import help
+    update.message.reply_text(help())
 
 def miao(bot, update):
     log(update)
