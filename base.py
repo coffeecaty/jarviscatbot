@@ -61,6 +61,7 @@ def repeat(bot,update,args):
         update.message.reply_text('你怎么比小猫还笨！你都没说话我怎么重复。0w0')
     elif len(args)==1:
         message=args[0]+'/n'+args[0]+'/n'+args[0]
+        update.message.reply_text(message)
     else:
         try:
             time=int(args[-1])
@@ -79,5 +80,3 @@ def repeat(bot,update,args):
                message=message+'/n'+text          
            update.message.reply_text(message)
     
-    except (IndexError, ValueError):
-        update.message.reply_text('你怎么比小猫还笨！你都没说话我怎么重复。0w0')
