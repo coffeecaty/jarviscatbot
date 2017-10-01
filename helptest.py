@@ -1,4 +1,4 @@
-def help()
+def help():
  help='我现在还是一只小猫，我只支持以下几种功能：'
  hl=[]
  hl.append('/start 开始交互：')
@@ -13,3 +13,6 @@ def help()
  for n in hl:
      help=help+'\n'+n
  return help
+
+if __name__ == '__main__':
+   print(help())
