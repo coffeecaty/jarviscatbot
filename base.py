@@ -34,24 +34,26 @@ def message(bot,update):
   
 
 def stc(bot,update,args):
-   log(update)  
+   log(update)
+   from datetime import timedelta
    if len(args)>0:
     message=''
     for n in args:
         message=message+n+' '
     update.message.reply_text('已成功为您留言给coffeecaty')
-    bot.sendMessage(config.yourid,text='from:@'+update.message.from_user.username+':'+message+'at '+str(update.message.date))
+    bot.sendMessage(config.yourid,text='from:@'+update.message.from_user.username+':'+message+'(at '+str(update.message.date+timedelta(hours=8))+'UTC+8:00)')
    else:
         update.message.reply_text('你怎么比小猫还笨！你都没留言我怎么帮你转达。0w0')
 
 def sts(bot,update,args):
-   log(update)  
+   log(update)
+   from datetime import timedelta
    if len(args)>0:
     message=''
     for n in args:
         message=message+n+' '
     update.message.reply_text('已成功为您留言给summy')
-    bot.sendMessage(config.loverid,text='from:@'+update.message.from_user.username+':'+message+'at '+str(update.message.date))
+    bot.sendMessage(config.loverid,text='from:@'+update.message.from_user.username+':'+message+'(at '+str(update.message.date+timedelta(hours=8))+'UTC+8:00)')
    else:
         update.message.reply_text('你怎么比小猫还笨！你都没留言我怎么帮你转达。0w0')
 
