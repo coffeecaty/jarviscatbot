@@ -79,6 +79,7 @@ def repeat(bot,update,args):
                n=n+1
            message=text
            while m<time:
-               message=message+'/n'+text          
+               message=message+'/n'+text
+               m=m+1
            update.message.reply_text(message)
     
