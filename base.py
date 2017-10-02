@@ -73,13 +73,10 @@ def repeat(bot,update,args):
         if time<1:
            update.message.reply_text('1后面是2，1前面是？（掰猫爪爪') 
         else:    
-           n,m,text=1,1,args[0]
+           n,text=1,args[0]
            while n<len(args):
                text=text+' '+args[n]
                n=n+1
-           message=text
-           while m<time:
-               message=message+'\n'+text
-               m=m+1
+           message=text+('\n'+text)*(time-1)
            update.message.reply_text(message)
     
