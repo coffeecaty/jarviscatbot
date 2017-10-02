@@ -7,6 +7,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import base
 import love
 import timer
+import decode
+import admin
 
 
 def main():
@@ -44,7 +46,9 @@ def main():
                                   pass_job_queue=True,
                                   pass_chat_data=True))
     dp.add_handler(CommandHandler("unset", timer.unset, pass_chat_data=True))
-    
+
+    # from love
+    dp.add_handler(CommandHandler("dhelp", decode.dhelp))    
 
 
     # Start the Bot

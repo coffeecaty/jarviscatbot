@@ -1,4 +1,0 @@
-token='此处粘贴你的bot token'
-yourid=贴入你的chat_id
-loverid=贴入你的那个她的chat_id
-decode_allow_list=['decode','/ap_decode',yourid,loverid]
