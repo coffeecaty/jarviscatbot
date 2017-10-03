@@ -54,7 +54,7 @@ def help_decoder(bot,update):
 
     
     for n in hl:
-        dhelp=dhelp+'\n'+n
+        hb=hb+'\n'+n
     update.message.reply_text(hb)
 
 def help_admin(bot,update):
