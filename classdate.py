@@ -62,8 +62,8 @@ class user:
              n=n+1
 
 class usergroup:
-    __slots__ = ('name','list','type','level','admin','apply','mu')
-    def __init__(self,name,list,type,level,admin,apply,mu):
+    __slots__ = ('name','list','type','level','admin','apply','mu','send_to')
+    def __init__(self,name,list,type,level,admin,apply,mu,send_to):
         self.name=name
         self.list=list
         self.type=type
@@ -71,6 +71,7 @@ class usergroup:
         self.admin=admin
         self.apply=apply
         self.mu=mu
+        self.send_to=send_to
         
     def add(self,chat_id):
          if chat_id not in self.list:

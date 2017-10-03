@@ -19,4 +19,4 @@ decode_admin=usergroup('decode_admin',[yourid],'decode',2,'admin',[],[],superadm
 decode=usergroup('decode',[yourid,loverid],'decode',4,'user',[],[],decode_admin)
 
 #group应包含所有usergroup）
-group=[superadmin,admin_all,superuser,admin_decode,decode]
+group=[superadmin,admin_all,superuser,decode_admin,decode]

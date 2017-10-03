@@ -91,9 +91,9 @@ def apply(bot,update,args):
                        if m not in n.send_to.mu+config.alluser.mu:
                            bot.sendMessage(m,text='@'+update.message.from_user.username+'向您申请'+n.name+'模块的使用权限(at '+str(update.message.date+timedelta(hours=8))+'UTC+8:00)')
                    update.message.reply_text('已成功提交您的申请，请耐心等待管理员批准')
-                else:
+               else:
                     update.message.reply_text('？？？，小猫觉得你已经有'+n.name+'模块的使用权限了哦0w0')
-                return
+               return
         update.message.reply_text('并没有这种模块哦0w0，请用/extra查询已支持的额外模块')
 
 def mute(bot,update,args):

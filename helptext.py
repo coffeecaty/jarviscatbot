@@ -58,4 +58,4 @@ def help_decoder(bot,update):
     update.message.reply_text(hb)
 
 def help_admin(bot,update):
-    
+    pass
