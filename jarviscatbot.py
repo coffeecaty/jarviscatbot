@@ -7,9 +7,9 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import base
 import love
 import timer
-import decode
+import decoder
 import admin
-
+import helptext
 
 def main():
     try:
@@ -26,12 +26,15 @@ def main():
     # on different commands - answer in Telegram
     # from base
     dp.add_handler(CommandHandler("start", base.start))
-    dp.add_handler(CommandHandler("help", base.help))
     dp.add_handler(CommandHandler("miao", base.miao))
     dp.add_handler(MessageHandler([Filters.text], base.message))
     dp.add_handler(CommandHandler("stc", base.stc,pass_args=True))
     dp.add_handler(CommandHandler("sts", base.sts,pass_args=True))
     dp.add_handler(CommandHandler("repeat", base.repeat,pass_args=True))
+    dp.add_handler(CommandHandler("apply", base.apply,pass_args=True))
+    dp.add_handler(CommandHandler("mute", base.mute,pass_args=True))
+    dp.add_handler(CommandHandler("unmute", base.unmute,pass_args=True))
+    
     
     # from love
     dp.add_handler(CommandHandler("love", love.love))
@@ -47,8 +50,12 @@ def main():
                                   pass_chat_data=True))
     dp.add_handler(CommandHandler("unset", timer.unset, pass_chat_data=True))
 
-    # from love
-    dp.add_handler(CommandHandler("dhelp", decode.dhelp))    
+    # from help
+    dp.add_handler(CommandHandler("help", helptext.help_base))
+    dp.add_handler(CommandHandler("extra", helptext.extra))
+    dp.add_handler(CommandHandler("help_timer", helptext.help_timer))
+    dp.add_handler(CommandHandler("help_decoder", helptext.help_decoder))
+    dp.add_handler(CommandHandler("help_admin", helptext.help_admin))
 
 
     # Start the Bot

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from telegram.ext import Updater, Job
 from logprint import log
 

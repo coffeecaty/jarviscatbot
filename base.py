@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from telegram.ext import Updater
 from logprint import log
 import config
+from datetime import timedelta
 
 def start(bot, update):
     log(update)
@@ -13,9 +16,6 @@ def start(bot, update):
       update.message.reply_text('您好，'+update.message.from_user.first_name+'，我是辅助coffeecaty照顾summy的专属小猫，虽然也提供一些其他服务，但基本上你通过我只能...看caty秀恩爱啊~~~')
      else:
       update.message.reply_text('您好，@'+update.message.from_user.username+'，我是辅助coffeecaty照顾summy的专属小猫，虽然也提供一些其他服务，但基本上你通过我只能...看caty秀恩爱啊~~~')
-def help(bot, update):
-    from helptext import help
-    update.message.reply_text(help())
 
 def miao(bot, update):
     log(update)
@@ -35,7 +35,6 @@ def message(bot,update):
 
 def stc(bot,update,args):
    log(update)
-   from datetime import timedelta
    if len(args)>0:
     message=''
     for n in args:
@@ -47,7 +46,6 @@ def stc(bot,update,args):
 
 def sts(bot,update,args):
    log(update)
-   from datetime import timedelta
    if len(args)>0:
     message=''
     for n in args:
@@ -80,3 +78,44 @@ def repeat(bot,update,args):
            message=text+('\n'+text)*(time-1)
            update.message.reply_text(message)
     
+def apply(bot,update,args):
+    log(update)
+    if len(args)==0:
+        update.message.reply_text('不说出你想申请的功能小猫我可没法帮你办手续哦。0w0')
+    else:
+        for n in config.group:
+           if (args[0]== n.name):
+               if update.message.chat_id not in n.list:
+                   n.add_apply(update.message.chat_id)
+                   for m in n.send_to,list:
+                       if m not in n.send_to.mu+config.alluser.mu:
+                           bot.sendMessage(m,text='@'+update.message.from_user.username+'向您申请'+n.name+'模块的使用权限(at '+str(update.message.date+timedelta(hours=8))+'UTC+8:00)')
+                   update.message.reply_text('已成功提交您的申请，请耐心等待管理员批准')
+                else:
+                    update.message.reply_text('？？？，小猫觉得你已经有'+n.name+'模块的使用权限了哦0w0')
+                return
+        update.message.reply_text('并没有这种模块哦0w0，请用/extra查询已支持的额外模块')
+
+def mute(bot,update,args):
+    log(update)
+    if len(args)==0:
+        config.alluser.mute(update.message.chat_id)
+    else:
+        for n in config.group:
+           if (args[0]== n.name):
+               n.mute(update.message.chat_id)
+               return
+        update.message.reply_text('并没有这种模块哦0w0，请用/extra查询已支持的额外模块')
+        
+def unmute(bot,update,args):
+    log(update)
+    if len(args)==0:
+        config.alluser.unmute(update.message.chat_id)
+        for n in config.group:
+            n.unmute(update.message.chat_id)
+    else:
+        for n in config.group:
+           if (args[0]== n.name):
+               n.unmute(update.message.chat_id)
+               return
+        update.message.reply_text('并没有这种模块哦0w0，请用/extra查询已支持的额外模块')        

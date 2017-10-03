@@ -1,36 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 token='此处粘贴你的bot token'
 yourid=贴入你的chat_id
 loverid=贴入你的那个她的chat_id
 
-class usergroup:
-    __slots__ = ('name,list')
-    def __init__(self,name,list=[]):
-        self.name=name
-    def checkout(self,checklist):
-        n=0
-        while n<len(checklist):
-            if checklist[n] in self.list:
-                checklist.pop(n)
-            else:
-                n=n+1
-    def add(self,chat_id):
-         if chat_id not in self.list:
-             self.list.append(chat_id)
-    def remove(self,chat_id):
-         n=0
-         while n<len(self.list):
-             if self.list[n] ==chat_id:
-                 self.list.pop(n)
-                 break
-             n=n+1
-    def print(self,username):
-         for n in self.list:
-             if n in username[0]:
-                 print(str(n)+' '+username[1][username[0].index(n)])
-             else:
-                 print(str(n)+' unknow')
 
-alluser=([],[])
-admin=usergroup(admin,[yourid])
-superuser=usergroup(superuser,admin.list+[loverid])
-decode=usergroup(decode,[superuser]+[])
+#以下内容不用修改（当然不满意默认的权限设定也可以这里直接改）
+from classdate import usergroup,user
+
+#alluser date
+alluser=user([],[],[])
+
+#usergroup date
+superadmin=usergroup('superadmin',[yourid],'all',0,'admin',[],[],'')
+admin_all=usergroup('admin',[yourid],'all',1,'admin',[],[],superadmin)
+superuser=usergroup('superuser',[yourid,loverid],'all',3,'user',[],[],admin_all)
+decode_admin=usergroup('decode_admin',[yourid],'decode',2,'admin',[],[],superadmin)
+decode=usergroup('decode',[yourid,loverid],'decode',4,'user',[],[],decode_admin)
+
+#group应包含所有usergroup）
+group=[superadmin,admin_all,superuser,admin_decode,decode]
