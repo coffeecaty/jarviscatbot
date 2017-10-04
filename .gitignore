@@ -17,3 +17,5 @@ deploy_key_rsa
 
 __pycache__/
 config.py
+date.txt
+.idea/
