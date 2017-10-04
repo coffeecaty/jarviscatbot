@@ -3,7 +3,19 @@
 from telegram.ext import Updater
 from logprint import log
 import config
+from decorator import al_in
 
+@al_in(config.superadmin)
+def date_revovery(bot,update,args):
+    log(update)
+    if args[0]='yes':
+        try
+            config.date_load()
+        except(EOFError):
+            update.message.reply_text('没有备份的数据可供还原喵！')
+    else:
+        update.message.reply_text('数据库操作事关重大，请在命令后输入yes执行')
+        
 # def show_mod:
 
 #    all(admin)

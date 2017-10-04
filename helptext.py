@@ -47,9 +47,9 @@ def help_timer(bot, update):
     update.message.reply_text(hb)
 
 
-@al_in(config.decode)
+@al_in(config.decoder)
 def help_decoder(bot, update):
-    hb = '欢迎使用decode模块功能：'
+    hb = '欢迎使用decoder模块功能：'
     hl = []
     hl.append('/help_decoder 显示本帮助')
 

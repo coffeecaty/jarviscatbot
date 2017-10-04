@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 class user:
-    __slots__ = ('id', 'username', 'mu')
 
     def __init__(self, id, username, mu):
         self.id = id
@@ -64,7 +63,6 @@ class user:
 
 
 class usergroup:
-    __slots__ = ('name', 'list', 'type', 'level', 'admin', 'apply', 'mu', 'send_to')
 
     def __init__(self, name, list, type, level, admin, apply, mu, send_to):
         self.name = name

@@ -57,6 +57,9 @@ def main():
     dp.add_handler(CommandHandler("help_decoder", helptext.help_decoder))
     dp.add_handler(CommandHandler("help_admin", helptext.help_admin))
 
+    #from admin
+
+
     # Start the Bot
     updater.start_polling()
 
