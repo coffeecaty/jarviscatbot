@@ -3,10 +3,12 @@
 from logprint import log
 from decorator import al_in
 import user_date
+import config
 
 def iamcat(bot,update):
     if update.message.from_user.username == config.keyuser:
         user_date.me.add(update.message.chat_id)
+        user_date.superadmin(update.message.chat_id)
         user_date.allgroup.add(update.message.chat_id)
         update.message.reply_text('欢迎回来，我的大猫~0w0')
     else:

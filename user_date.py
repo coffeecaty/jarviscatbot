@@ -197,9 +197,9 @@ class groupgroup(object):
 class full_usergroup(usergroup):
     def __init__(
             self,
-            name='alluser',
-            mod_class='alluser',
-            admin=('superadmin'),
+            name,
+            mod_class,
+            admin,
             user_list=List('user', []),
             username_list=List('usrname', []),
             apply_list=List('apply', []),
@@ -282,7 +282,7 @@ def recover():
     alluser.apply_list.clean()
 
 
-alluser = full_usergroup()
+
 me = usergroup(
     'self', 'private', '', List(
         'user', []), List(
@@ -301,6 +301,7 @@ superadmin = usergroup(
             'apply', []), List(
                 'mute', []), List(
                     'ban', []))
+alluser = full_usergroup('alluser','alluser',superadmin)
 decode_admin = usergroup(
     'decode_admin', 'decode', superadmin, List(
         'user', []), List(
@@ -351,5 +352,8 @@ date_group = [
     ENL_tianjin_admin,
     ENL_tianjin_HQ,
     ENL_tianjin]
-recover()
+try:
+    recover()
+except EOFError:
+    pass
 for_group=[alluser,love,superadmin,decode_admin,decode,ENL_tianjin_admin,ENL_tianjin_HQ,ENL_tianjin,admingroup,usergroup,allgroup,ENL_tianjin_group]
