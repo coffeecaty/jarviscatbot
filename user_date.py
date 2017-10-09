@@ -76,8 +76,8 @@ class usergroup(object):
         self.mute_list = mute_list
         self.ban_list = ban_list
 
-    def add(self, date=None):
-        if date is None:
+    def add(self, date=[]):
+        if date is []:
             for n in self.apply_list.list:
                 if n not in self.ban_list.list:
                     self.user_list.add(n)
@@ -91,10 +91,8 @@ class usergroup(object):
                 if date not in self.ban_list.list:
                     self.user_list.add(date)
 
-    def remove(self, date, ban=False):
+    def remove(self, date):
         self.user_list.remove(date)
-        if ban:
-            self.ban_list.add(date)
 
     def clean(self):
         self.user_list.clean()
@@ -118,8 +116,8 @@ class usergroup(object):
     def apply(self, date):
         self.apply_list.add(date)
 
-    def apply_refuse(self, date=all):
-        if date == all:
+    def apply_refuse(self, date='all'):
+        if date == 'all':
             self.apply_list.clean()
         else:
             self.apply_list.remove(date)
@@ -150,11 +148,11 @@ class groupgroup(object):
         self.list = list
         self.admin = admin
 
-    def add(self, date=None):
+    def add(self, date=[]):
         for n in self.list:
             n.add(date)
 
-    def remove(self, date, ban=False):
+    def remove(self, date):
         for n in self.list:
             n.remove(date, ban)
 
@@ -182,7 +180,7 @@ class groupgroup(object):
         for n in self.list:
             n.apply(date)
 
-    def apply_refuse(self, date=all):
+    def apply_refuse(self, date='all'):
         for n in self.list:
             n.apply_refuse(date)
 
