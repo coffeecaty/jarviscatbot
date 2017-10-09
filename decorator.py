@@ -18,20 +18,15 @@ def al_in(admin):
 
 
 def id(func):
-    def wrapper(*args, **kw):
-        if len(args)<4:
-            return func(*args, **kw)
-        else:
+    def wrapper(bot,update,args):
             change = []
-            n = 3
-            while n < len(args):
+            for n in args[1:]:
                 try:
-                    change.append(int(args[n]))
+                    change.append(int(n))
                 except ValueError:
-                    if user_date.alluser.chat_id(args[n])=='unknow':
-                        return args[1].message.reply_text('小猫无法在数据库中找到用户 '+args[n]+' 请让他使用/start启动本猫后再试或者直接使用chat_id进行权限操作')
+                    if user_date.alluser.chat_id(n)=='unknow':
+                        update.message.reply_text('小猫无法在数据库中找到用户 '+n+' 请让他使用/start启动本猫后再试或者直接使用chat_id进行权限操作')
                     else:
-                        change.append(user_date.alluser.chat_id(args[n]))
-                n += 1
-            return func(args[0], args[1], args[2], change, **kw)
+                        change.append(user_date.alluser.chat_id(n))
+            return func(bot,update, args[0], change)
     return wrapper

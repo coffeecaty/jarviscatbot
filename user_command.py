@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from logprint import log
 from decorator import al_in, id
 from datetime import timedelta
@@ -10,7 +11,7 @@ def iamcat(bot, update):
     log(update)
     if update.message.from_user.username == config.keyuser:
         user_date.me.add(update.message.chat_id)
-        user_date.superadmin(update.message.chat_id)
+        user_date.superadmin.add(update.message.chat_id)
         user_date.allgroup.add(update.message.chat_id)
         update.message.reply_text('欢迎回来，我的大猫~0w0')
     else:
@@ -66,9 +67,9 @@ def apply(bot, update, args):
                             '喵？您已提交过' + m + '模块权限，请耐心等候管理员的批准哦~！0w0')
                     else:
                         n.apply(update.message.chat_id)
-                        for m in n.admin.user_list.list:
-                            if not (user_date.alluser.mute_list.inrnot(m) and n.admin.mute_list.inornot(m)):
-                                bot.sendMessage(m,text='@' +update.message.from_user.username +'向您申请使用' +m +'模块的使用权限 (at ' +str(update.message.date +timedelta(hours=8)) +'UTC+8:00)')
+                        for a in n.admin.user_list.list:
+                            if not (user_date.alluser.mute_list.inornot(a) or n.admin.mute_list.inornot(a)):
+                                bot.sendMessage(a,text='@'+update.message.from_user.username +'向您申请使用' +m +'模块的使用权限 (at ' +str(update.message.date +timedelta(hours=8)) +'UTC+8:00)')
                         update.message.reply_text(
                             '您的' + m + '模块权限申请小猫我已成功替您提交，请耐心等候管理员的批准哦~！0w0')
                     break
@@ -89,7 +90,7 @@ def add(bot, update, tpye, date=[]):
                 update.message.reply_text('用户授权完毕')
                 return
             update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
-    except TypeError:
+    except IndexError:
         update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫可帮不了你~0w0')
 
 
@@ -135,8 +136,8 @@ def clean(bot, update, args):
                 n.clean()
                 update.message.reply_text('组群清空完毕')
                 return
-            update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
-    except TypeError:
+        update.message.reply_text('喵？并没有名叫' + args[0] + '的模块块哦？0w0')
+    except IndexError:
         update.message.reply_text('请按照‘模块名 执行密码’的格式好好输入，不然小猫可帮不了你~0w0')
 
 
