@@ -45,11 +45,11 @@ class List(object):
         return self.list.index(date)
 
     def print(self):
-         text = ''
-         for n in self.list:
+        text = ''
+        for n in self.list:
             text = text + str(n).ljust(15) + ' | ' + alluser.username(n) + '\n'
-         text = text + 'total ' + str(self.len()) + ' date.'
-         return text
+        text = text + 'total ' + str(self.len()) + ' date.'
+        return text
 
     def inornot(self, date):
         if date in self.list:
@@ -134,9 +134,9 @@ class usergroup(object):
             text = text + self.ban_list.print()
         elif type == 'all':
             text = text + self.name + ' user list' + '\n' + self.user_list.print(
-                ) + '\n' + self.name + ' apply list' + '\n' + self.apply_list.print(
-                ) + '\n' + self.name + ' ban list' + '\n' + self.ban_list.print(
-                )
+            ) + '\n' + self.name + ' apply list' + '\n' + self.apply_list.print(
+            ) + '\n' + self.name + ' ban list' + '\n' + self.ban_list.print(
+            )
         else:
             text = text + '喵？并没有这种列表可以打印哦？'
         return text
@@ -280,7 +280,6 @@ def recover():
     alluser.apply_list.clean()
 
 
-
 me = usergroup(
     'self', 'private', '', List(
         'user', []), List(
@@ -299,7 +298,7 @@ superadmin = usergroup(
             'apply', []), List(
                 'mute', []), List(
                     'ban', []))
-alluser = full_usergroup('alluser','alluser',superadmin)
+alluser = full_usergroup('alluser', 'alluser', superadmin)
 decode_admin = usergroup(
     'decode_admin', 'decode', superadmin, List(
         'user', []), List(
@@ -354,4 +353,16 @@ try:
     recover()
 except EOFError:
     pass
-for_group=[alluser,love,superadmin,decode_admin,decode,ENL_tianjin_admin,ENL_tianjin_HQ,ENL_tianjin,admingroup,usergroup,allgroup,ENL_tianjin_group]
+for_group = [
+    alluser,
+    love,
+    superadmin,
+    decode_admin,
+    decode,
+    ENL_tianjin_admin,
+    ENL_tianjin_HQ,
+    ENL_tianjin,
+    admingroup,
+    usergroup,
+    allgroup,
+    ENL_tianjin_group]
