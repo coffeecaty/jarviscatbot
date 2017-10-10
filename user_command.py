@@ -44,7 +44,7 @@ def printlist(bot, update, args):
                     update.message.chat_id):
                 update.message.reply_text(n.printlist(args[1]))
                 return
-            update.message.reply_text('喵？并没有你说的这种模块块哦？0w0')
+        update.message.reply_text('喵？并没有你说的这种模块块哦？0w0')
     except IndexError:
         update.message.reply_text('请好好输入你打印的列表种类？0w0')
 
@@ -203,6 +203,7 @@ def unmute(bot, update, args):
             if not bool(do):
                 update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
 
+def notice(bot, update, args):
 
 if __name__ == '__main__':
     class update:
