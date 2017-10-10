@@ -37,6 +37,7 @@ def main():
     dp.add_handler(CommandHandler('unban', user_command.unban, pass_args=True))
     dp.add_handler(CommandHandler('mute', user_command.mute, pass_args=True))
     dp.add_handler(CommandHandler('unmute', user_command.unmute, pass_args=True))
+    dp.add_handler(CommandHandler('notice', user_command.notice, pass_args=True))
 
 
 
