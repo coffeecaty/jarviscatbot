@@ -77,7 +77,7 @@ class usergroup(object):
         self.ban_list = ban_list
 
     def add(self, date=[]):
-        if date is []:
+        if date == []:
             for n in self.apply_list.list:
                 if n not in self.ban_list.list:
                     self.user_list.add(n)
@@ -116,8 +116,8 @@ class usergroup(object):
     def apply(self, date):
         self.apply_list.add(date)
 
-    def apply_refuse(self, date='all'):
-        if date == 'all':
+    def apply_refuse(self, date=[]):
+        if date == []:
             self.apply_list.clean()
         else:
             self.apply_list.remove(date)
@@ -230,7 +230,7 @@ class full_usergroup(usergroup):
                 return 'unknow'
 
     def chat_id(self, date):
-        if type(date) == list:
+        if isinstance(date, list):
             idgroup = []
             for n in date:
                 if self.username_list.inornot(n):

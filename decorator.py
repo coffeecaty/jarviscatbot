@@ -19,6 +19,7 @@ def al_in(admin):
 
 def id(func):
     def wrapper(bot,update,args):
+        try:
             change = []
             for n in args[1:]:
                 try:
@@ -29,4 +30,6 @@ def id(func):
                     else:
                         change.append(user_date.alluser.chat_id(n))
             return func(bot,update, args[0], change)
+        except IndexError:
+            update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫我可帮不了你~0w0')
     return wrapper

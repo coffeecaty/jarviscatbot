@@ -27,7 +27,7 @@ def main():
     dp.add_handler(CommandHandler('iamcat',user_command.iamcat))
     dp.add_handler(CommandHandler('backup', user_command.backup))
     dp.add_handler(CommandHandler('recover', user_command.recover,pass_args=True))
-    dp.add_handler(CommandHandler('print', user_command.print,pass_args=True))
+    dp.add_handler(CommandHandler('print', user_command.printlist,pass_args=True))
     dp.add_handler(CommandHandler('apply', user_command.apply, pass_args=True))
     dp.add_handler(CommandHandler('add', user_command.add, pass_args=True))
     dp.add_handler(CommandHandler('remove', user_command.remove, pass_args=True))
