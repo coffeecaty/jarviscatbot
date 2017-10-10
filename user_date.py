@@ -44,7 +44,7 @@ class List(object):
     def index(self, date):
         return self.list.index(date)
 
-    def print(self):
+    def printlist(self):
         text = ''
         for n in self.list:
             text = text + str(n).ljust(15) + ' | ' + alluser.username(n) + '\n'
@@ -122,20 +122,20 @@ class usergroup(object):
         else:
             self.apply_list.remove(date)
 
-    def print(self, type):
+    def printlist(self, type):
         text = self.name + ' ' + type + ' list' + '\n'
         if type == 'user':
-            text = text + self.user_list.print()
+            text = text + self.user_list.printlist()
         elif type == 'apply':
-            text = text + self.apply_list.print()
+            text = text + self.apply_list.printlist()
         elif type == 'mute':
-            text = text + self.mute_list.print()
+            text = text + self.mute_list.printlist()
         elif type == 'ban':
-            text = text + self.ban_list.print()
+            text = text + self.ban_list.printlist()
         elif type == 'all':
-            text = text + self.name + ' user list' + '\n' + self.user_list.print(
-            ) + '\n' + self.name + ' apply list' + '\n' + self.apply_list.print(
-            ) + '\n' + self.name + ' ban list' + '\n' + self.ban_list.print(
+            text = text + self.name + ' user list' + '\n' + self.user_list.printlist(
+            ) + '\n' + self.name + ' apply list' + '\n' + self.apply_list.printlist(
+            ) + '\n' + self.name + ' ban list' + '\n' + self.ban_list.printlist(
             )
         else:
             text = text + '喵？并没有这种列表可以打印哦？'
@@ -184,10 +184,10 @@ class groupgroup(object):
         for n in self.list:
             n.apply_refuse(date)
 
-    def print(self, type):
+    def printlist(self, type):
         text = 'all ' + type + ' list in ' + self.name + '\n'
         for n in self.list:
-            text = text + n.print(type) + '\n'
+            text = text + n.printlist(type) + '\n'
         text = text + 'that\'s all'
         return text
 

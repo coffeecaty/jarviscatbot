@@ -35,13 +35,13 @@ def recover(bot, update, args):
         update.message.reply_text('资料恢复事关重大，请输入正确的执行密码执行。0w0')
 
 
-def print(bot, update, args):
+def printlist(bot, update, args):
     log(update)
     for n in user_date.for_group:
         try:
             if args[0] == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
-                update.message.reply_text(n.print(args[1]))
+                update.message.reply_text(n.printlist(args[1]))
                 return
         except TypeError:
             update.message.reply_text('请好好输入你打印的列表种类？0w0')
@@ -197,3 +197,20 @@ def unmute(bot, update, args='alluser'):
                 break
         if not bool(do):
             update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
+
+if __name__ == '__main__':
+    class update:
+        pass
+    class message:
+        def reply_text(self,date):
+            print(date)
+    class from_user:
+        pass
+    from_user.username='test'
+    message.from_user=from_user()
+    message.chat_id=1895
+    update.message=message()
+    message.date='1919.10.9'
+    message.text='text test'
+    t=update()
+    clean('bot', t, ('decode', 'coffeecaty'))
