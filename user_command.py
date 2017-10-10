@@ -80,26 +80,28 @@ def apply(bot, update, args):
 
 
 @id
-def add(bot, update, tpye, date=[]):
+def add(bot, update, type, date=[]):
     log(update)
+    print(type)
+    print(date)
     try:
         for n in user_date.for_group:
-            if tpye == n.name and n.admin.user_list.inornot(
+            if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
                 n.add(date)
                 update.message.reply_text('用户授权完毕')
                 return
             update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
-    except IndexError:
+    except (IndexError,TypeError):
         update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫可帮不了你~0w0')
 
 
 @id
-def remove(bot, update, tpye, date):
+def remove(bot, update, type, date):
     log(update)
     try:
         for n in user_date.for_group:
-            if tpye == n.name and n.admin.user_list.inornot(
+            if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
                 n.add(date)
                 update.message.reply_text('用户移出完毕')
@@ -110,11 +112,11 @@ def remove(bot, update, tpye, date):
 
 
 @id
-def apply_refuse(bot, update, tpye, date=[]):
+def apply_refuse(bot, update, type, date=[]):
     log(update)
     try:
         for n in user_date.for_group:
-            if tpye == n.name and n.admin.user_list.inornot(
+            if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
                 if date == []:
                     n.apply_refuse()
@@ -142,11 +144,11 @@ def clean(bot, update, args):
 
 
 @id
-def ban(bot, update, tpye, date):
+def ban(bot, update, type, date):
     log(update)
     try:
         for n in user_date.for_group:
-            if tpye == n.name and n.admin.user_list.inornot(
+            if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
                 n.ban(date)
                 update.message.reply_text('用户封禁完毕')
@@ -157,11 +159,11 @@ def ban(bot, update, tpye, date):
 
 
 @id
-def unban(bot, update, tpye, date):
+def unban(bot, update, type, date):
     log(update)
     try:
         for n in user_date.for_group:
-            if tpye == n.name and n.admin.user_list.inornot(
+            if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
                 n.unban(date)
                 update.message.reply_text('用户解禁完毕')
@@ -213,4 +215,4 @@ if __name__ == '__main__':
     message.date='1919.10.9'
     message.text='text test'
     t=update()
-    clean('bot', t, ('decode', 'coffeecaty'))
+    add('bot', t, ('decode','1','2','33'))
