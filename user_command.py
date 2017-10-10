@@ -173,6 +173,7 @@ def unban(bot, update, type, date):
 def mute(bot, update, args):
     if args == []:
         user_date.alluser.mute(update.message.chat_id)
+        update.message.reply_text( '已成功屏蔽全部的系统消息~！0w0')
     else:
         for m in args:
             do = 0
@@ -190,6 +191,7 @@ def mute(bot, update, args):
 def unmute(bot, update, args):
     if args == []:
         user_date.alluser.unmute(update.message.chat_id)
+        update.message.reply_text( '已成功解除全部系统消息的屏蔽状态~！0w0')
     else:
         for m in args:
             do = 0
@@ -204,6 +206,30 @@ def unmute(bot, update, args):
                 update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
 
 def notice(bot, update, args):
+    log(update)
+    try:
+        text=''
+        for a in args[1:]:
+            text=text+a
+        if text == '':
+            update.message.reply_text('小猫我可不知道你想说什么~0w0')
+            return
+        for n in user_date.for_group:
+            if args[0] == n.name and n.admin.user_list.inornot(
+                    update.message.chat_id):
+                for m in n.user_list.list:
+                    if not (n.mute_list.inornot(m) or user_date.alluser.mute_list.inornot(a)):
+                        bot.sendMessage(m, text='system notice from group '+m+':\n' +
+                                                text +
+                                                '\n(at ' +
+                                                str(update.message.date +
+                                                    timedelta(hours=8)) +
+                                                'UTC+8:00)')
+                update.message.reply_text('通知完毕')
+                return
+        update.message.reply_text('喵？并没有名叫' + args[0] + '的模块块哦？0w0')
+    except IndexError:
+        update.message.reply_text('请按照‘模块名 通知内容’的格式好好输入，不然小猫我可帮不了你~0w0')
 
 if __name__ == '__main__':
     class update:
@@ -215,6 +241,8 @@ if __name__ == '__main__':
 
     class from_user:
         pass
+    class bot:
+        pass
     from_user.username = 'test'
     message.from_user = from_user()
     message.chat_id = 1895
@@ -222,5 +250,6 @@ if __name__ == '__main__':
     message.date = '1919.10.9'
     message.text = 'text test'
     t = update()
-    user_date.decode.apply_list.add([1, 2, 3, 4, 5])
-    mute('bot', t, [])
+    user_date.decode.add([1, 2, 3, 4, 5])
+    notice('bot', t, ['decode','1'])
+
