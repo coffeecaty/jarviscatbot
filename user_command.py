@@ -38,15 +38,15 @@ def recover(bot, update, args):
 
 def printlist(bot, update, args):
     log(update)
-    for n in user_date.for_group:
-        try:
+    try:
+        for n in user_date.for_group:
             if args[0] == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
                 update.message.reply_text(n.printlist(args[1]))
                 return
-        except IndexError:
-            update.message.reply_text('请好好输入你打印的列表种类？0w0')
-    update.message.reply_text('喵？并没有你说的这种模块块哦？0w0')
+            update.message.reply_text('喵？并没有你说的这种模块块哦？0w0')
+    except IndexError:
+        update.message.reply_text('请好好输入你打印的列表种类？0w0')
 
 
 def apply(bot, update, args):
@@ -103,7 +103,9 @@ def add(bot, update, type, date=[]):
 @id
 def remove(bot, update, type, date):
     log(update)
-    try:
+    if date==[]:
+        update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫我可帮不了你~0w0')
+    else:
         for n in user_date.for_group:
             if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
@@ -111,14 +113,11 @@ def remove(bot, update, type, date):
                 update.message.reply_text('用户移出完毕')
                 return
         update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
-    except IndexError:
-        update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫我可帮不了你~0w0')
 
 
 @id
 def apply_refuse(bot, update, type, date=[]):
-    log(update)
-    try:
+        log(update)
         for n in user_date.for_group:
             if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
@@ -126,8 +125,6 @@ def apply_refuse(bot, update, type, date=[]):
                 update.message.reply_text('用户移出完毕')
                 return
         update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
-    except IndexError:
-        update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫我可帮不了你~0w0')
 
 
 def clean(bot, update, args):
@@ -147,7 +144,9 @@ def clean(bot, update, args):
 @id
 def ban(bot, update, type, date):
     log(update)
-    try:
+    if date==[]:
+        update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫我可帮不了你~0w0')
+    else:
         for n in user_date.for_group:
             if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
@@ -155,14 +154,14 @@ def ban(bot, update, type, date):
                 update.message.reply_text('用户封禁完毕')
                 return
         update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
-    except IndexError:
-        update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫我可帮不了你~0w0')
 
 
 @id
 def unban(bot, update, type, date):
     log(update)
-    try:
+    if date==[]:
+        update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫我可帮不了你~0w0')
+    else:
         for n in user_date.for_group:
             if type == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
@@ -170,12 +169,9 @@ def unban(bot, update, type, date):
                 update.message.reply_text('用户解禁完毕')
                 return
         update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
-    except IndexError:
-        update.message.reply_text('请按照‘模块名 用户1 用户2...’的格式好好输入，不然小猫我可帮不了你~0w0')
-
 
 def mute(bot, update, args):
-    if args==[]:
+    if args == []:
         user_date.alluser.mute(update.message.chat_id)
     else:
         for m in args:
@@ -191,9 +187,8 @@ def mute(bot, update, args):
                 update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
 
 
-
 def unmute(bot, update, args):
-    if args==[]:
+    if args == []:
         user_date.alluser.unmute(update.message.chat_id)
     else:
         for m in args:
