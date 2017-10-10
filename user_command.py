@@ -258,10 +258,10 @@ def notice(bot, update, args):
                 noticelist.remove(user_date.alluser.mute_list.list)
                 break
         for a in noticelist.list:
-           # bot.sendMessage(
+            bot.sendMessage(
                 a,
-                text = 'system notice from class ' +
-                   noticelist.name +
+                text='system notice from class ' +
+                     noticelist.name +
                      ':\n' +
                      text +
                      '\n(at ' +
