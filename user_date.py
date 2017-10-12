@@ -9,13 +9,17 @@ class List(object):
         self.list = list
 
     def add(self, date):
+        dolist = []
         try:
             for n in date:
                 if n not in self.list:
                     self.list.append(n)
+                    dolist.append(n)
         except TypeError:
             if date not in self.list:
                 self.list.append(date)
+                dolist.append(date)
+        return dolist
 
     def len(self):
         return len(self.list)
@@ -42,7 +46,12 @@ class List(object):
         self.list = []
 
     def index(self, date):
-        return self.list.index(date)
+       try:
+        for n in self.list:
+            if n.lower()==date.lower():
+                return self.list.index(n)
+       except AttributeError:
+           return self.list.index(date)
 
     def printlist(self):
         text = ''
@@ -52,10 +61,16 @@ class List(object):
         return text
 
     def inornot(self, date):
-        if date in self.list:
-            return True
-        else:
+        try:
+            for n in self.list:
+                if date.lower() == n.lower():
+                    return True
             return False
+        except AttributeError:
+            if date in self.list:
+                return True
+            else:
+                return False
 
 
 class usergroup(object):
@@ -77,19 +92,27 @@ class usergroup(object):
         self.ban_list = ban_list
 
     def add(self, date=[]):
+        dolist = []
         if date == []:
             for n in self.apply_list.list:
                 if n not in self.ban_list.list:
-                    self.user_list.add(n)
+                    for m in self.user_list.add(n):
+                        dolist.append([self.name, m])
             self. apply_list.clean()
         else:
             try:
                 for n in date:
                     if n not in self.ban_list.list:
-                        self.user_list.add(n)
+                        for m in self.user_list.add(n):
+                            dolist.append([self.name, m])
             except TypeError:
                 if date not in self.ban_list.list:
-                    self.user_list.add(date)
+                    for m in self.user_list.add(date):
+                        dolist.append([self.name, m])
+        for a in dolist:
+            if self.mute_list.inornot(a[1]):
+                dolist.pop(dolist.index(a))
+        return dolist
 
     def remove(self, date):
         self.user_list.remove(date)
@@ -149,8 +172,11 @@ class groupgroup(object):
         self.admin = admin
 
     def add(self, date=[]):
+        dolist = []
         for n in self.list:
-            n.add(date)
+            for m in n.add(date):
+                dolist.append(m)
+        return dolist
 
     def remove(self, date):
         for n in self.list:
@@ -221,13 +247,13 @@ class full_usergroup(usergroup):
                     namegroup.append(
                         self.username_list.list[user_list.index(n)])
                 else:
-                    'unknow'
+                    'unknow '+str(n)
             return namegroup
         except TypeError:
             if self.user_list.inornot(date):
                 return self.username_list.list[self.user_list.index(date)]
             else:
-                return 'unknow'
+                return 'unknow '+str(n)
 
     def chat_id(self, date):
         if isinstance(date, list):

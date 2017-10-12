@@ -38,6 +38,7 @@ def main():
     dp.add_handler(CommandHandler('mute', user_command.mute, pass_args=True))
     dp.add_handler(CommandHandler('unmute', user_command.unmute, pass_args=True))
     dp.add_handler(CommandHandler('notice', user_command.notice, pass_args=True))
+    dp.add_handler(CommandHandler('mod', user_command.mod, pass_args=True))
 
 
 

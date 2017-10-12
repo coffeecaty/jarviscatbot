@@ -94,7 +94,16 @@ def add(bot, update, type, date=[]):
     for n in user_date.for_group:
         if type == n.name and n.admin.user_list.inornot(
                 update.message.chat_id):
-            n.add(date)
+            for m in n.add(date):
+                if not user_date.alluser.mute_list.inornot(m[1]):
+                    bot.sendMessage(m[1], text='您已获得 ' +
+                                    m[0] +
+                                    ' 模块的使用权限，请使用/help ' +
+                                    m[0] +
+                                    ' 获取模块使用帮助\n(at ' +
+                                    str(update.message.date +
+                                        timedelta(hours=8)) +
+                                    'UTC+8:00)')
             update.message.reply_text('用户授权完毕')
             return
     update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
@@ -274,26 +283,44 @@ def notice(bot, update, args):
         update.message.reply_text('请按照‘模块名 通知内容’的格式好好输入，不然小猫我可帮不了你~0w0')
 
 
-if __name__ == '__main__':
-    class update:
-        pass
+def mod(bot,update,args=[]):
+    log(update)
+    if args==[] or (not user_date.superadmin.user_list.inornot(update.message.chat_id)):
+        change=[update.message.chat_id]
+    else:
+        change = []
+        for n in args:
+            try:
+                change.append(int(n))
+            except ValueError:
+                if n == 'all':
+                    change.append('all')
+                elif user_date.alluser.chat_id(n) == 'unknow':
+                    update.message.reply_text('小猫无法在数据库中找到用户 ' + n + ' 请让他使用/start启动本猫后再试或者直接使用chat_id进行权限操作')
+                else:
+                    change.append(user_date.alluser.chat_id(n))
+    text=''
+    for m in change:
+        if m=='all':
+            text=text+'all mod list:\n'
+            for a in user_date.date_group:
+                text=text+a.name+'\n'
+            text=text+'total '+str(len(user_date.date_group))+' mod\n'
+        else:
+            text=text+'all mod list for '+user_date.alluser.username(m)+' :\n'
+            mod=0
+            for a in user_date.date_group:
+                try:
+                    if a.user_list.inornot(m):
+                        name=a.name.ljust(20)
+                        mute=''
+                        if a.mute_list.inornot(m):
+                            mute='|mute'
+                        text=text+name+mute+'\n'
+                        mod=mod+1
+                except AttributeError:
+                    continue
+            text=text+'total '+str(mod)+' mod for '+user_date.alluser.username(m)+'\n'
+    print(text)
 
-    class message:
-        def reply_text(self, date):
-            print(date)
 
-    class from_user:
-        pass
-
-    class bot:
-        pass
-    from_user.username='test'
-    message.from_user=from_user()
-    message.chat_id=1895
-    update.message=message()
-    message.date='1919.10.9'
-    message.text='text test'
-    t=update()
-    user_date.decode.add([1, 2, 3, 4, 5])
-    user_date.superadmin.add(1895)
-    notice('bot', t, ['allgroup', '1'])
