@@ -180,7 +180,7 @@ class groupgroup(object):
 
     def remove(self, date):
         for n in self.list:
-            n.remove(date, ban)
+            n.remove(date)
 
     def clean(self):
         for n in self.list:

@@ -249,7 +249,7 @@ def notice(bot, update, args):
     except AttributeError:
         text = ''
         for a in args[1:]:
-            text = text + a
+            text = text + a+' '
         if text == '':
             update.message.reply_text('小猫我可不知道你想说什么~0w0')
             return
@@ -285,17 +285,10 @@ def notice(bot, update, args):
 
 def mod(bot,update,args=[]):
     log(update)
-    if not user_date.superadmin.user_list.inornot(update.message.chat_id) and args[0]=='all':
-        text = 'all mod list:\n'
-        mod = 0
-        for a in user_date.public.list:
-                text = text + a.name+ '\n'
-                mod = mod + 1
-        text = text + 'total ' + str(mod) + ' mod'
-        update.message.reply_text(text)
-        return
-    elif args==[] or (not user_date.superadmin.user_list.inornot(update.message.chat_id)):
+    if args==[] or (('all' not in args )and (not user_date.superadmin.user_list.inornot(update.message.chat_id))):
         change=[update.message.chat_id]
+    elif ('all'  in args )and (not user_date.superadmin.user_list.inornot(update.message.chat_id)):
+        change=['all']
     else:
         change = []
         for n in args:
@@ -311,9 +304,14 @@ def mod(bot,update,args=[]):
     for m in change:
         if m=='all':
             text='all mod list:\n'
-            for a in user_date.date_group:
-                text=text+a.name+'\n'
-            text=text+'total '+str(len(user_date.date_group))+' mod'
+            dolist=user_date.List('',[])
+            for a in user_date.for_group:
+               if a.admin.user_list.inornot(update.message.chat_id):
+                dolist.add([a.admin.name,a.name])
+            dolist.add(user_date.public.namelist())
+            for n in dolist.list:
+                text=text+n+'\n'
+            text=text+'total '+str(dolist.len())+' mod'
             update.message.reply_text(text)
         else:
             text='all mod list for '+user_date.alluser.username(m)+' :\n'
