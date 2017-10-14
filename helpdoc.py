@@ -21,6 +21,8 @@ def help_admin(update):
 /print 打印列表，格式为/print 模块 列表，列表包括用户列表（user），申请列表（apply），封禁列表（ban），全部列表（all)'''
     if user_date.me.user_list.inornot(update.message.chat_id):
         text=text+'，屏蔽列表（mute）'
+    if user_date.superadmin.user_list.inornot(update.message.chat_id):
+        text=text+'\n/mod 增加显示指定玩家可使用的模块列表，格式为/mod （用户1 用户2...）'
     text=text+'''\n/add 增加新用户，格式为/add 模块 （用户1 用户2...），默认添加全部已提交申请的用户。
 /apply_refuse 拒绝用户的申请请求，格式为/apply_refuse 模块 （用户1 用户2），默认拒绝队列中全部的请求。
 /remove 删除用户，格式为/remove 模块 用户1 （用户2...)
@@ -29,8 +31,8 @@ def help_admin(update):
 /notice 对模块内用户发送系统消息，格式为/notice 模块 消息内容
 /clean '''+config.keyuser+''' 清空整个模块的用户数据(牛逼操作 请务必慎重操作)！！
 
-您可以管理的模块包括：
-`'''
+'''
+    text=text+'您可以管理的模块包括：\n`'
     mod=0
     for n in user_date.for_group:
         if n.admin.user_list.inornot(update.message.chat_id):
