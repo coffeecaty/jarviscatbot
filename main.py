@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import base,user_command
+import base,user_command,helpdoc
 
 
 def main():
@@ -39,6 +39,9 @@ def main():
     dp.add_handler(CommandHandler('unmute', user_command.unmute, pass_args=True))
     dp.add_handler(CommandHandler('notice', user_command.notice, pass_args=True))
     dp.add_handler(CommandHandler('mod', user_command.mod, pass_args=True))
+
+    #from helopdoc
+    dp.add_handler(CommandHandler('help', helpdoc.help, pass_args=True))
 
 
 

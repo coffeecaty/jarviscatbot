@@ -46,12 +46,12 @@ class List(object):
         self.list = []
 
     def index(self, date):
-       try:
-        for n in self.list:
-            if n.lower()==date.lower():
-                return self.list.index(n)
-       except AttributeError:
-           return self.list.index(date)
+        try:
+            for n in self.list:
+                if n.lower() == date.lower():
+                    return self.list.index(n)
+        except AttributeError:
+            return self.list.index(date)
 
     def printlist(self):
         text = ''
@@ -217,6 +217,19 @@ class groupgroup(object):
         text = text + 'that\'s all'
         return text
 
+    def inany(self,date):
+        for n in self.list:
+            if n.user_list.inornot(date):
+                return True
+        return False
+
+    def namelist(self):
+        namelist=[]
+        for n in self.list:
+            namelist.append(n.name)
+        return namelist
+
+
 
 class full_usergroup(usergroup):
     def __init__(
@@ -247,13 +260,13 @@ class full_usergroup(usergroup):
                     namegroup.append(
                         self.username_list.list[user_list.index(n)])
                 else:
-                    'unknow '+str(n)
+                    'unknow ' + str(n)
             return namegroup
         except TypeError:
             if self.user_list.inornot(date):
                 return self.username_list.list[self.user_list.index(date)]
             else:
-                return 'unknow '+str(n)
+                return 'unknow ' + str(n)
 
     def chat_id(self, date):
         if isinstance(date, list):
@@ -355,16 +368,26 @@ ENL_tianjin = usergroup(
             'apply', []), List(
                 'mute', []), List(
                     'ban', []))
+
+# 对全部模块admin操作
 admingroup = groupgroup(
     'admingroup', [
         decode_admin, ENL_tianjin_admin], superadmin)
+
+# 对全部模块普通用户操作
 usergroup = groupgroup(
     'usergroup', [
         decode, ENL_tianjin, ENL_tianjin_HQ], superadmin)
+
+# 对全部模块用户操作
 allgroup = groupgroup('allgroup', admingroup.list + usergroup.list, superadmin)
+
+# 对ENL_天津类模块全部用户操作
 ENL_tianjin_group = groupgroup(
     'ENL_tianjin_group', [
         ENL_tianjin, ENL_tianjin_HQ], ENL_tianjin_admin)
+
+# 数据拷贝用组
 date_group = [
     alluser,
     me,
@@ -379,6 +402,8 @@ try:
     recover()
 except EOFError:
     pass
+
+# 检索命令组名用组
 for_group = [
     alluser,
     love,
@@ -392,3 +417,9 @@ for_group = [
     usergroup,
     allgroup,
     ENL_tianjin_group]
+
+# help admin权限分配用组
+admin_list = groupgroup('help_admin_list',[me,superadmin,decode_admin,ENL_tianjin_admin],me)
+
+# 公开分组
+public=groupgroup('public',[decode,ENL_tianjin],me)

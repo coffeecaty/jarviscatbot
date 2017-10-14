@@ -285,7 +285,16 @@ def notice(bot, update, args):
 
 def mod(bot,update,args=[]):
     log(update)
-    if args==[] or (not user_date.superadmin.user_list.inornot(update.message.chat_id)):
+    if not user_date.superadmin.user_list.inornot(update.message.chat_id) and args[0]=='all':
+        text = 'all mod list:\n'
+        mod = 0
+        for a in user_date.public.list:
+                text = text + a.name+ '\n'
+                mod = mod + 1
+        text = text + 'total ' + str(mod) + ' mod'
+        update.message.reply_text(text)
+        return
+    elif args==[] or (not user_date.superadmin.user_list.inornot(update.message.chat_id)):
         change=[update.message.chat_id]
     else:
         change = []
@@ -299,15 +308,15 @@ def mod(bot,update,args=[]):
                     update.message.reply_text('小猫无法在数据库中找到用户 ' + n + ' 请让他使用/start启动本猫后再试或者直接使用chat_id进行权限操作')
                 else:
                     change.append(user_date.alluser.chat_id(n))
-    text=''
     for m in change:
         if m=='all':
-            text=text+'all mod list:\n'
+            text='all mod list:\n'
             for a in user_date.date_group:
                 text=text+a.name+'\n'
-            text=text+'total '+str(len(user_date.date_group))+' mod\n'
+            text=text+'total '+str(len(user_date.date_group))+' mod'
+            update.message.reply_text(text)
         else:
-            text=text+'all mod list for '+user_date.alluser.username(m)+' :\n'
+            text='all mod list for '+user_date.alluser.username(m)+' :\n'
             mod=0
             for a in user_date.date_group:
                 try:
@@ -320,7 +329,6 @@ def mod(bot,update,args=[]):
                         mod=mod+1
                 except AttributeError:
                     continue
-            text=text+'total '+str(mod)+' mod for '+user_date.alluser.username(m)+'\n'
-    print(text)
-
+            text=text+'total '+str(mod)+' mod for '+user_date.alluser.username(m)
+            update.message.reply_text(text)
 
