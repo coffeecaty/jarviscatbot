@@ -4,8 +4,7 @@
 from logprint import log
 from decorator import al_in, id
 from datetime import timedelta
-import user_date
-import config
+import user_date,config
 
 
 def iamcat(bot, update):

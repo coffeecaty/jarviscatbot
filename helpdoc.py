@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import user_date
-import config
+import user_date,config
 
 
 def help_base(update):
@@ -40,7 +39,7 @@ def help_admin(update):
 /notice 对模块内用户发送系统消息，格式为/notice 模块 消息内容'''
     if user_date.me.user_list.inornot(update.message.chat_id):
         text = text + '\n/message 向任意用户留言，格式为/message 用户1 （用户2...） ~ 内容'
-    text = text + '\n/clean ' + config.keyuser + \
+    text = text + '\n/clean 模块 ' + config.keyuser + \
         ' 清空整个模块的用户数据(牛逼操作 请务必慎重操作)！！\n\n您可以管理的模块包括：\n'
     mod = 0
     for n in user_date.for_group:

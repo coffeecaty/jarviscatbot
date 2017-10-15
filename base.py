@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 from logprint import log
 from datetime import timedelta
-import user_date
-import helpdoc
-import user_command
+import user_date,helpdoc,user_command
 
 
 def start(bot, update):
@@ -15,7 +13,7 @@ def start(bot, update):
         update.message.reply_text(
             '你好，我最爱的summy，我是你的专属小猫，我会辅助coffeecaty照顾你，说出你的需求，我会尽量满足。小猫还小，会的很少，请有耐心的慢慢教小猫长大哦~')
     else:
-        if update.message.first_name is not None:
+        if update.message.from_user.first_name is not None:
             update.message.reply_text(
                 '您好，' +
                 update.message.from_user.first_name +

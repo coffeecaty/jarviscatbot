@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import base
-import user_command
-import helpdoc
+import base,user_command,helpdoc,timer
 
 
 def main():
