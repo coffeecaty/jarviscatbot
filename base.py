@@ -108,9 +108,15 @@ def talk(bot, update):
         if user_date.love.user_list.inornot(update.message.chat_id):
             bot.sendMessage(update.message.chat_id, text='小猫也爱大熊！最爱大熊了！！',
                             reply_to_message_id=update.message.message_id)
+            bot.sendMessage(
+                user_date.me.user_list.list[0],
+                text=update.message.text)
         elif user_date.me.user_list.inornot(update.message.chat_id):
             bot.sendMessage(update.message.chat_id, text='小猫知道大猫最爱大熊了！！',
                             reply_to_message_id=update.message.message_id)
+            bot.sendMessage(
+                user_date.love.user_list.list[0],
+                text=update.message.text)
         else:
             bot.sendMessage(
                 update.message.chat_id,
@@ -119,7 +125,7 @@ def talk(bot, update):
     elif '使用帮助' in update.message.text:
         bot.sendMessage(update.message.chat_id, text='小猫正在替你寻找使用帮助，不要着急哦',
                         reply_to_message_id=update.message.message_id)
-        helpdoc.help(bot, update)
+        helpdoc.help(bot, update,['base'])
     elif '申请权限' in update.message.text:
         bot.sendMessage(update.message.chat_id, text='小猫正在替你发送你的申请，不要着急哦',
                         reply_to_message_id=update.message.message_id)
