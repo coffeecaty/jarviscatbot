@@ -266,7 +266,7 @@ class full_usergroup(usergroup):
             if self.user_list.inornot(date):
                 return self.username_list.list[self.user_list.index(date)]
             else:
-                return 'unknow ' + str(n)
+                return 'unknow ' + str(date)
 
     def chat_id(self, date):
         if isinstance(date, list):

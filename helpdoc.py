@@ -7,7 +7,11 @@ def help_base(update):
 /apply  申请额外模块权限，格式为/apply 模块1 （模块2...）
 /mute   屏蔽模块系统消息，格式为/mute （模块1 模块2...），默认全部屏蔽
 /unmute 解除系统消息屏蔽，格式为/unmute （模块1 模块2...），默认全部解除
-/mod    显示模块列表，格式为/mod （all），默认显示已有权限的模块，all显示全部功能模块'''
+/mod    显示模块列表，格式为/mod （all），默认显示已有权限的模块，all显示全部模块
+/stc    给coffeecaty留言 ，格式为/stc 留言内容
+/sts    给summyxy留言 ，格式为/sts 留言内容
+/repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍
+'''
     update.message.reply_text(text)
 
 def help_admin(update):
@@ -16,8 +20,8 @@ def help_admin(update):
         text=text+'''
 /iamcat 重设self权限
 /backup 备份用户数据
-/recovery '''+config.keyuser+''' 从备份中恢复用户数据\n'''
-    text=text+'''以下全部涉及用户的操作，均可使用chat_id或@username两种形式，两者完全等价。
+/recovery '''+config.keyuser+''' 从备份中恢复用户数据'''
+    text=text+'''\n以下全部涉及用户的操作，均可使用chat_id或@username两种形式，两者完全等价。
 /print 打印列表，格式为/print 模块 列表，列表包括用户列表（user），申请列表（apply），封禁列表（ban），全部列表（all)'''
     if user_date.me.user_list.inornot(update.message.chat_id):
         text=text+'，屏蔽列表（mute）'
@@ -28,17 +32,16 @@ def help_admin(update):
 /remove 删除用户，格式为/remove 模块 用户1 （用户2...)
 /ban 封禁并删除用户，格式为/ban 模块 用户1 （用户2...）
 /unban 解封用户，格式为/unban 模块 用户1 （用户2...）
-/notice 对模块内用户发送系统消息，格式为/notice 模块 消息内容
-/clean '''+config.keyuser+''' 清空整个模块的用户数据(牛逼操作 请务必慎重操作)！！
-
-'''
-    text=text+'您可以管理的模块包括：\n`'
+/notice 对模块内用户发送系统消息，格式为/notice 模块 消息内容'''
+    if user_date.me.user_list.inornot(update.message.chat_id):
+        text=text+'\n/message 向任意用户留言，格式为/message 用户1 （用户2...） ~ 内容'
+    text=text+'\n/clean '+config.keyuser+' 清空整个模块的用户数据(牛逼操作 请务必慎重操作)！！\n\n您可以管理的模块包括：\n'
     mod=0
     for n in user_date.for_group:
         if n.admin.user_list.inornot(update.message.chat_id):
             text=text+n.name+' '
             mod+=1
-    text=text+'`\ntotal '+str(mod)+' mod group'
+    text=text+'\ntotal '+str(mod)+' mod group'
     update.message.reply_text(text)
 
 

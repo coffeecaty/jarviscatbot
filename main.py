@@ -22,6 +22,11 @@ def main():
     # on different commands - answer in Telegram
     # commands from base
     dp.add_handler(CommandHandler("start", base.start))
+    dp.add_handler(CommandHandler("miao", base.miao))
+    dp.add_handler(CommandHandler("stc", base.stc, pass_args=True))
+    dp.add_handler(CommandHandler("sts", base.sts, pass_args=True))
+    dp.add_handler(CommandHandler("repeat", base.repeat, pass_args=True))
+    dp.add_handler(MessageHandler([Filters.text], base.talk))
 
     #from user_command
     dp.add_handler(CommandHandler('iamcat',user_command.iamcat))
@@ -38,6 +43,7 @@ def main():
     dp.add_handler(CommandHandler('mute', user_command.mute, pass_args=True))
     dp.add_handler(CommandHandler('unmute', user_command.unmute, pass_args=True))
     dp.add_handler(CommandHandler('notice', user_command.notice, pass_args=True))
+    dp.add_handler(CommandHandler('message', user_command.message, pass_args=True))
     dp.add_handler(CommandHandler('mod', user_command.mod, pass_args=True))
 
     #from helopdoc
