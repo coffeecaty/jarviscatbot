@@ -37,14 +37,13 @@ def recover(bot, update, args):
 
 
 def printlist(bot, update, args):
-    log(update)
+        log(update)
         for n in user_date.for_group:
-            if args[0] == n.name and n.admin.user_list.inornot(
-                    update.message.chat_id):
+            if args[0] == n.name and n.admin.user_list.inornot(update.message.chat_id):
                 try:
                    update.message.reply_text(n.printlist(args[1]))
                 except IndexError:
-                   update.message.reply_text(n.printlist('user')
+                   update.message.reply_text(n.printlist('user'))
                 return
         update.message.reply_text('喵？并没有你说的这种模块块哦？0w0')
 
@@ -334,8 +333,7 @@ def mod(bot, update, args=[]):
                         mod=mod + 1
                 except AttributeError:
                     continue
-            text=text + 'total ' +
-                str(mod) + ' mod for ' + user_date.alluser.username(m)
+            text=text + 'total ' +str(mod) + ' mod for ' + user_date.alluser.username(m)
             update.message.reply_text(text)
 
 

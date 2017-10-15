@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-from telegram.ext import Updater
 import user_date
+from datetime import timedelta
 
 
 def log(update):
