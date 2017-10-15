@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import base,user_command,helpdoc
+import base
+import user_command
+import helpdoc
 
 
 def main():
 
-    #导入config参数
+    # 导入config参数
     try:
         import config
     except ImportExcept:
@@ -28,28 +30,54 @@ def main():
     dp.add_handler(CommandHandler("repeat", base.repeat, pass_args=True))
     dp.add_handler(MessageHandler([Filters.text], base.talk))
 
-    #from user_command
-    dp.add_handler(CommandHandler('iamcat',user_command.iamcat))
+    # from user_command
+    dp.add_handler(CommandHandler('iamcat', user_command.iamcat))
     dp.add_handler(CommandHandler('backup', user_command.backup))
-    dp.add_handler(CommandHandler('recover', user_command.recover,pass_args=True))
-    dp.add_handler(CommandHandler('print', user_command.printlist,pass_args=True))
+    dp.add_handler(
+        CommandHandler(
+            'recover',
+            user_command.recover,
+            pass_args=True))
+    dp.add_handler(
+        CommandHandler(
+            'print',
+            user_command.printlist,
+            pass_args=True))
     dp.add_handler(CommandHandler('apply', user_command.apply, pass_args=True))
     dp.add_handler(CommandHandler('add', user_command.add, pass_args=True))
-    dp.add_handler(CommandHandler('remove', user_command.remove, pass_args=True))
-    dp.add_handler(CommandHandler('apply_refuse', user_command.apply_refuse, pass_args=True))
+    dp.add_handler(
+        CommandHandler(
+            'remove',
+            user_command.remove,
+            pass_args=True))
+    dp.add_handler(
+        CommandHandler(
+            'apply_refuse',
+            user_command.apply_refuse,
+            pass_args=True))
     dp.add_handler(CommandHandler('clean', user_command.clean, pass_args=True))
     dp.add_handler(CommandHandler('ban', user_command.ban, pass_args=True))
     dp.add_handler(CommandHandler('unban', user_command.unban, pass_args=True))
     dp.add_handler(CommandHandler('mute', user_command.mute, pass_args=True))
-    dp.add_handler(CommandHandler('unmute', user_command.unmute, pass_args=True))
-    dp.add_handler(CommandHandler('notice', user_command.notice, pass_args=True))
-    dp.add_handler(CommandHandler('message', user_command.message, pass_args=True))
+    dp.add_handler(
+        CommandHandler(
+            'unmute',
+            user_command.unmute,
+            pass_args=True))
+    dp.add_handler(
+        CommandHandler(
+            'notice',
+            user_command.notice,
+            pass_args=True))
+    dp.add_handler(
+        CommandHandler(
+            'message',
+            user_command.message,
+            pass_args=True))
     dp.add_handler(CommandHandler('mod', user_command.mod, pass_args=True))
 
-    #from helopdoc
+    # from helopdoc
     dp.add_handler(CommandHandler('help', helpdoc.help, pass_args=True))
-
-
 
     # Start the Bot
     updater.start_polling()

@@ -217,18 +217,17 @@ class groupgroup(object):
         text = text + 'that\'s all'
         return text
 
-    def inany(self,date):
+    def inany(self, date):
         for n in self.list:
             if n.user_list.inornot(date):
                 return True
         return False
 
     def namelist(self):
-        namelist=[]
+        namelist = []
         for n in self.list:
             namelist.append(n.name)
         return namelist
-
 
 
 class full_usergroup(usergroup):
@@ -419,7 +418,9 @@ for_group = [
     ENL_tianjin_group]
 
 # help admin权限分配用组
-admin_list = groupgroup('help_admin_list',[me,superadmin,decode_admin,ENL_tianjin_admin],me)
+admin_list = groupgroup(
+    'help_admin_list', [
+        me, superadmin, decode_admin, ENL_tianjin_admin], me)
 
 # 公开分组
-public=groupgroup('public',[decode,ENL_tianjin],me)
+public = groupgroup('public', [decode, ENL_tianjin], me)
