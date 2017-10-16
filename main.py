@@ -77,6 +77,14 @@ def main():
     # from helopdoc
     dp.add_handler(CommandHandler('help', helpdoc.help, pass_args=True))
 
+    # from timer
+    dp.add_handler(CommandHandler("timer", timer.timer,
+                                  pass_args=True,
+                                  pass_job_queue=True,
+                                  pass_chat_data=True))
+    dp.add_handler(CommandHandler("untimer", timer.untimer, pass_chat_data=True))
+
+
     # Start the Bot
     updater.start_polling()
 

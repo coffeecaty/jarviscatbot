@@ -38,7 +38,7 @@ def help_admin(update):
 /unban 解封用户，格式为/unban 模块 用户1 （用户2...）
 /notice 对模块内用户发送系统消息，格式为/notice 模块 消息内容'''
     if user_date.me.user_list.inornot(update.message.chat_id):
-        text = text + '\n/message 向任意用户留言，格式为/message 用户1 （用户2...） ~ 内容'
+        text = text + '\n/message 向任意用户留言，格式为/message 用户1 （用户2...） : 内容'
     text = text + '\n/clean 模块 ' + config.keyuser + \
         ' 清空整个模块的用户数据(牛逼操作 请务必慎重操作)！！\n\n您可以管理的模块包括：\n'
     mod = 0
@@ -48,6 +48,12 @@ def help_admin(update):
             mod += 1
     text = text + '\ntotal ' + str(mod) + ' mod group'
     update.message.reply_text(text)
+
+def help_timer(bot, update):
+    hb = '''欢迎使用timer模块功能：
+/set 设置时间，格式为“秒 分 时 天”，以空格分隔，可由后向前缺省，如/set 60或/set 0 1均为1分钟
+/unset 取消已设置的闹钟'''
+    update.message.reply_text(hb)
 
 
 def help(bot, update, args):
@@ -61,5 +67,7 @@ def help(bot, update, args):
     elif args[0] in (user_date.ENL_tianjin_group.namelist()):
         update.message.reply_text('还没写')
         # help_ENL()
+    elif args[0] == 'timer':
+         help_timer(update)
     else:
         update.message.reply_text('并没有这种模块的帮助文档喵，请核对输入模块名以及你是否有该模块的使用权限。')

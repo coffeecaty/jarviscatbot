@@ -313,14 +313,14 @@ def mod(bot, update, args=[]):
                     dolist.add([a.admin.name, a.name])
                 elif a.user_list.inornot(update.message.chat_id):
                     dolist.add([a.name])
-            dolist.add(user_date.public.namelist())
+            dolist.add(user_date.public.namelist()+['timer'])
             for n in dolist.list:
                 text=text + n + '\n'
             text=text + 'total ' + str(dolist.len()) + ' mod'
             update.message.reply_text(text)
         else:
             text='all mod list for ' + user_date.alluser.username(m) + ' :\n'
-            mod=0
+            mod=1
             for a in user_date.date_group:
                 try:
                     if a.user_list.inornot(m):
@@ -332,17 +332,17 @@ def mod(bot, update, args=[]):
                         mod=mod + 1
                 except AttributeError:
                     continue
-            text=text + 'total ' +str(mod) + ' mod for ' + user_date.alluser.username(m)
+            text=text + 'timer\ntotal ' +str(mod) + ' mod for ' + user_date.alluser.username(m)
             update.message.reply_text(text)
 
 
 def message(bot, update, args):
     try:
-        user=args[:args.index('~')]
-        text=args[args.index('~') + 1:]
+        user=args[:args.index(':')]
+        text=args[args.index(':') + 1:]
     except ValueError:
         update.message.reply_text(
-            '请按照‘用户1 （用户2...） ~ 内容’的格式好好输入，小猫才能帮你发送消息哦~0w0')
+            '请按照‘用户1 （用户2...） : 内容’的格式好好输入，小猫才能帮你发送消息哦~0w0')
     if text == []:
         update.message.reply_text('小猫我可不知道你想说什么~0w0')
     user_id=[]
