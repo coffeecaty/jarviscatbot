@@ -127,7 +127,7 @@ def talk(bot, update):
             if n.name in update.message.text:
                 helpdoc.help(bot, update,[n.name])
                 return
-        if 'timer' in user_date.date_group:
+        if 'timer' in update.message.text:
          helpdoc.help(bot, update, ['timer'])
         else:
          helpdoc.help(bot, update, ['base'])
