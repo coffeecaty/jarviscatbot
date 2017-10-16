@@ -127,7 +127,10 @@ def talk(bot, update):
             if n.name in update.message.text:
                 helpdoc.help(bot, update,[n.name])
                 return
-        helpdoc.help(bot, update, ['base'])
+        if 'timer' in user_date.date_group:
+         helpdoc.help(bot, update, ['timer'])
+        else:
+         helpdoc.help(bot, update, ['base'])
     elif '申请权限' in update.message.text:
         bot.sendMessage(update.message.chat_id, text='小猫正在替你发送你的申请，不要着急哦',
                         reply_to_message_id=update.message.message_id)

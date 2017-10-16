@@ -11,7 +11,7 @@ def alarm(bot, job):
 
 def timer(bot, update, args, job_queue, chat_data):
     """Adds a job to the queue"""
-
+    log(update)
     chat_id = update.message.chat_id
     if len(args) == 0:
         update.message.reply_text('请用正确的格式设置提醒参数，具体请参考/help timer）')
