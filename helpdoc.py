@@ -51,8 +51,8 @@ def help_admin(update):
 
 def help_timer(bot, update):
     hb = '''欢迎使用timer模块功能：
-/set 设置时间，格式为“秒 分 时 天”，以空格分隔，可由后向前缺省，如/set 60或/set 0 1均为1分钟
-/unset 取消已设置的闹钟'''
+/timer 设置时间，格式为“秒 分 时 天”，以空格分隔，可由后向前缺省，如/set 60或/set 0 1均为1分钟
+/untimer 取消已设置的闹钟'''
     update.message.reply_text(hb)
 
 
