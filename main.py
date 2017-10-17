@@ -84,11 +84,6 @@ def main():
                                   pass_chat_data=True))
     dp.add_handler(CommandHandler("untimer", timer.untimer, pass_chat_data=True))
 
-    # from datebase
-    dp.add_handler(CommandHandler("datebase", datebase.datebase,
-                                  pass_args=True,
-                                  pass_chat_data=True))
-
     # Start the Bot
     updater.start_polling()
 
