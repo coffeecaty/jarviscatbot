@@ -4,7 +4,8 @@
 from logprint import log
 from decorator import al_in, id
 from datetime import timedelta
-import user_date,config
+import user_date
+import config
 
 
 def iamcat(bot, update):
@@ -28,34 +29,37 @@ def backup(bot, update):
 @al_in(user_date.me)
 def recover(bot, update, args):
     log(update)
-    if args[0] == config.keyuser:
-        user_date.recover()
-        update.message.reply_text('资料已经恢复完毕，有饼干吃吗？0w0')
-    else:
+    try
+        if args[0] == config.keyuser:
+            user_date.recover()
+            update.message.reply_text('资料已经恢复完毕，有饼干吃吗？0w0')
+        else:
+            update.message.reply_text('资料恢复事关重大，请输入正确的执行密码执行。0w0')
+    except IndexError:
         update.message.reply_text('资料恢复事关重大，请输入正确的执行密码执行。0w0')
 
 
 def printlist(bot, update, args):
-        log(update)
-        for n in user_date.for_group:
-            if args[0] == n.name and n.admin.user_list.inornot(update.message.chat_id):
-                try:
-                   update.message.reply_text(n.printlist(args[1]))
-                except IndexError:
-                   update.message.reply_text(n.printlist('user'))
-                return
-        update.message.reply_text('喵？并没有你说的这种模块块哦？0w0')
-
+    log(update)
+    for n in user_date.for_group:
+        if args[0] == n.name and n.admin.user_list.inornot(
+                update.message.chat_id):
+            try:
+                update.message.reply_text(n.printlist(args[1]))
+            except IndexError:
+                update.message.reply_text(n.printlist('user'))
+            return
+    update.message.reply_text('喵？并没有你说的这种模块块哦？0w0')
 
 
 def apply(bot, update, args):
     log(update)
     try:
         for m in args:
-            do=0
+            do = 0
             for n in user_date.for_group:
                 if m == n.name:
-                    do=1
+                    do = 1
                     if n.ban_list.inornot(update.message.chat_id):
                         update.message.reply_text(
                             '喵？您已被管理员封禁' + m + '模块权限，如有疑问请联系模块管理员，小猫我可不知道发生了什么哦！0w0')
@@ -185,13 +189,13 @@ def mute(bot, update, args):
         update.message.reply_text('已成功屏蔽全部的系统消息~！0w0')
     else:
         for m in args:
-            do=0
+            do = 0
             for n in user_date.for_group:
                 if m == n.name:
                     n.mute(update.message.chat_id)
                     update.message.reply_text(
                         '已成功屏蔽' + m + '模块的系统消息~！0w0')
-                    do=1
+                    do = 1
                     break
             if not bool(do):
                 update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
@@ -203,13 +207,13 @@ def unmute(bot, update, args):
         update.message.reply_text('已成功解除全部系统消息的屏蔽状态~！0w0')
     else:
         for m in args:
-            do=0
+            do = 0
             for n in user_date.for_group:
                 if m == n.name:
                     n.unmute(update.message.chat_id)
                     update.message.reply_text(
                         '已解除' + m + '模块系统消息的屏蔽~！0w0')
-                    do=1
+                    do = 1
                     break
             if not bool(do):
                 update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
@@ -218,9 +222,9 @@ def unmute(bot, update, args):
 def notice(bot, update, args):
     log(update)
     try:
-        text=''
+        text = ''
         for a in args[1:]:
-            text=text + a
+            text = text + a
         if text == '':
             update.message.reply_text('小猫我可不知道你想说什么~0w0')
             return
@@ -246,18 +250,18 @@ def notice(bot, update, args):
                 return
         update.message.reply_text('喵？并没有名叫' + args[0] + '的模块块哦？0w0')
     except AttributeError:
-        text=''
+        text = ''
         for a in args[1:]:
-            text=text + a + ' '
+            text = text + a + ' '
         if text == '':
             update.message.reply_text('小猫我可不知道你想说什么~0w0')
             return
-        noticelist=user_date.List('', [])
-        templist=user_date.List('', [])
+        noticelist = user_date.List('', [])
+        templist = user_date.List('', [])
         for n in user_date.for_group:
             if args[0] == n.name and n.admin.user_list.inornot(
                     update.message.chat_id):
-                noticelist.name=n.name
+                noticelist.name = n.name
                 for m in n.list:
                     templist.add(m.user_list.list)
                     templist.remove(m.mute_list.list)
@@ -288,11 +292,11 @@ def mod(bot, update, args=[]):
         ('all' not in args)and (
             not user_date.superadmin.user_list.inornot(
             update.message.chat_id))):
-        change=[update.message.chat_id]
+        change = [update.message.chat_id]
     elif ('all' in args)and (not user_date.superadmin.user_list.inornot(update.message.chat_id)):
-        change=['all']
+        change = ['all']
     else:
-        change=[]
+        change = []
         for n in args:
             try:
                 change.append(int(n))
@@ -306,46 +310,47 @@ def mod(bot, update, args=[]):
                     change.append(user_date.alluser.chat_id(n))
     for m in change:
         if m == 'all':
-            text='all mod list:\n'
-            dolist=user_date.List('', [])
+            text = 'all mod list:\n'
+            dolist = user_date.List('', [])
             for a in user_date.for_group:
                 if a.admin.user_list.inornot(update.message.chat_id):
                     dolist.add([a.admin.name, a.name])
                 elif a.user_list.inornot(update.message.chat_id):
                     dolist.add([a.name])
-            dolist.add(user_date.public.namelist()+['timer'])
+            dolist.add(user_date.public.namelist() + ['timer'])
             for n in dolist.list:
-                text=text + n + '\n'
-            text=text + 'total ' + str(dolist.len()) + ' mod'
+                text = text + n + '\n'
+            text = text + 'total ' + str(dolist.len()) + ' mod'
             update.message.reply_text(text)
         else:
-            text='all mod list for ' + user_date.alluser.username(m) + ' :\n'
-            mod=1
+            text = 'all mod list for ' + user_date.alluser.username(m) + ' :\n'
+            mod = 1
             for a in user_date.date_group:
                 try:
                     if a.user_list.inornot(m):
-                        name=a.name.ljust(20)
-                        mute=''
+                        name = a.name.ljust(20)
+                        mute = ''
                         if a.mute_list.inornot(m):
-                            mute='|mute'
-                        text=text + name + mute + '\n'
-                        mod=mod + 1
+                            mute = '|mute'
+                        text = text + name + mute + '\n'
+                        mod = mod + 1
                 except AttributeError:
                     continue
-            text=text + 'timer\ntotal ' +str(mod) + ' mod for ' + user_date.alluser.username(m)
+            text = text + 'timer\ntotal ' + \
+                str(mod) + ' mod for ' + user_date.alluser.username(m)
             update.message.reply_text(text)
 
 
 def message(bot, update, args):
     try:
-        user=args[:args.index(':')]
-        text=args[args.index(':') + 1:]
+        user = args[:args.index(':')]
+        text = args[args.index(':') + 1:]
     except ValueError:
         update.message.reply_text(
             '请按照‘用户1 （用户2...） : 内容’的格式好好输入，小猫才能帮你发送消息哦~0w0')
     if text == []:
         update.message.reply_text('小猫我可不知道你想说什么~0w0')
-    user_id=[]
+    user_id = []
     for n in user:
         try:
             user_id.append(int(n))
@@ -357,19 +362,19 @@ def message(bot, update, args):
                 user_id.append(user_date.alluser.chat_id(n))
     if user_id == []:
         update.message.reply_text('小猫我可不知道你想和谁说悄悄话哦~0w0')
-    text_message=''
+    text_message = ''
     for n in text:
-        text_message=text_message + n + ' '
+        text_message = text_message + n + ' '
     for m in user_id:
-            bot.sendMessage(
-                m,
-                text='@coffeecaty:\n' +
-                     text_message +
-                     '\n(at ' +
-                     str(
-                         update.message.date +
-                         timedelta(
-                             hours=8)) +
-                     'UTC+8:00)')
-            update.message.reply_text(
-    '已向 ' + user_date.alluser.username(m) + ' 成功转达消息')
+        bot.sendMessage(
+            m,
+            text='@coffeecaty:\n' +
+                 text_message +
+                 '\n(at ' +
+                 str(
+                     update.message.date +
+                     timedelta(
+                         hours=8)) +
+                 'UTC+8:00)')
+        update.message.reply_text(
+            '已向 ' + user_date.alluser.username(m) + ' 成功转达消息')
