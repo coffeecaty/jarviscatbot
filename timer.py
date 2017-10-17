@@ -6,7 +6,7 @@ from logprint import log
 
 def alarm(bot, job):
     """Function to send the alarm message"""
-    bot.send_message(job.context, text='到时提醒：\n' + job.name)
+    bot.send_message(job.context, text='大熊起床啦！')
 
 
 def timer(bot, update, args, job_queue, chat_data):
