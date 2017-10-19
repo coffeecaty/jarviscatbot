@@ -2,8 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import base,user_command,helpdoc,timer
+import base,user_command,helpdoc,timer,logging
 
+# Enable logging
+logging.basicConfig(
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 def main():
 

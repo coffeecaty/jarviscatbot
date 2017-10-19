@@ -29,7 +29,7 @@ def backup(bot, update):
 @al_in(user_date.me)
 def recover(bot, update, args):
     log(update)
-    try
+    try:
         if args[0] == config.keyuser:
             user_date.recover()
             update.message.reply_text('资料已经恢复完毕，有饼干吃吗？0w0')
