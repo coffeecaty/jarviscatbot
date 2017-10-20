@@ -2,14 +2,19 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import base,user_command,helpdoc,timer,logging
+import base
+import user_command
+import helpdoc
+import timer
+import logging
 
 # Enable logging
 logging.basicConfig(
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        level=logging.INFO)
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO)
 
 logger = logging.getLogger(__name__)
+
 
 def main():
 
@@ -79,6 +84,12 @@ def main():
             user_command.message,
             pass_args=True))
     dp.add_handler(CommandHandler('mod', user_command.mod, pass_args=True))
+    dp.add_handler(CommandHandler('copy', user_command.copy, pass_args=True))
+    dp.add_handler(
+        CommandHandler(
+            'update_mod',
+            user_command.update_mod,
+            pass_args=True))
 
     # from helopdoc
     dp.add_handler(CommandHandler('help', helpdoc.help, pass_args=True))
@@ -88,7 +99,11 @@ def main():
                                   pass_args=True,
                                   pass_job_queue=True,
                                   pass_chat_data=True))
-    dp.add_handler(CommandHandler("untimer", timer.untimer, pass_chat_data=True))
+    dp.add_handler(
+        CommandHandler(
+            "untimer",
+            timer.untimer,
+            pass_chat_data=True))
 
     # Start the Bot
     updater.start_polling()

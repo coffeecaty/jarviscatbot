@@ -378,3 +378,67 @@ def message(bot, update, args):
                  'UTC+8:00)')
         update.message.reply_text(
             '已向 ' + user_date.alluser.username(m) + ' 成功转达消息')
+
+
+@al_in(user_date.superadmin)
+def copy(bot, update, args):
+    log(update)
+    if len(args)<2:
+        update.message.reply_text('请按照 /copy 目标模块 导入模块 这种模式至少输入两个模块名哦~不然小猫可不知道怎么操作')
+        return
+    purpose = None
+    for n in user_date.for_group[3:]:
+            if n.name == args[0]:
+                purpose = n
+    if purpose is None:
+        update.message.reply_text('并没有 ' + args[0] + ' 这种模块哦~请好好检查输入的模块名~')
+        return
+    for a in args[1:]:
+            for n in user_date.for_group[3:]:
+                if n.name == a:
+                    for m in purpose.add(n.user_list.list):
+                        if not user_date.alluser.mute_list.inornot(m[1]):
+                            bot.sendMessage(m[1], text='您已获得 ' +
+                                                       m[0] +
+                                                       ' 模块的使用权限，请使用/help ' +
+                                                       m[0] +
+                                                       ' 获取模块使用帮助\n(at ' +
+                                                       str(update.message.date +
+                                                           timedelta(hours=8)) +
+                                                       'UTC+8:00)')
+                    update.message.reply_text(a+' 模块用户已成功导入至 '+purpose.name+' 模块中' )
+                    break
+            update.message.reply_text('并没有 ' + a + ' 这种模块~请好好检查输入的模块名~')
+
+def update_mod(bot,update,args):
+    log(update)
+    if user_date.superadmin.user_list.inornot(update.message.chat_id):
+        dolist = []
+        for n in args:
+            try:
+                dolist.append(int(n))
+            except ValueError:
+                if user_date.alluser.chat_id(n) == 'unknow':
+                    update.message.reply_text(
+                        '小猫无法在数据库中找到用户 ' + n + ' 请让他使用/start启动本猫后再试或者直接使用chat_id进行操作')
+                else:
+                    dolist.append(user_date.alluser.chat_id(n))
+        if dolist == []:
+            dolist = [update.message.chat_id]
+    else:
+        dolist=[update.message.chat_id]
+
+    for member in dolist:
+        for group in user_date.for_group[2:]:
+            if group.admin.user_list.inornot(member):
+                group.add(member)
+        if user_date.ENL_tianjin_HQ.user_list.inornot(member):
+            user_date.ENL_tianjin.add(member)
+        if user_date.ENL_tianjin.ban_list.inornot(member):
+            user_date.ENL_tianjin_HQ.ban(member)
+        if member==update.message.chat_id:
+            text='您的权限信息已经更新完毕喵~'
+        else:
+            text=user_date.alluser.username(member)+' 的权限信息已经更新完毕喵~'
+
+

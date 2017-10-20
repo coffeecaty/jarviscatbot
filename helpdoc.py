@@ -4,14 +4,15 @@ import user_date,config
 
 
 def help_base(update):
-    text = '''/start  开始交互
-/help   显示帮助文档，格式为/help 模块，默认为本帮助
-/apply  申请额外模块权限，格式为/apply 模块1 （模块2...）
-/mute   屏蔽模块系统消息，格式为/mute （模块1 模块2...），默认全部屏蔽
+    text = '''/start 开始交互
+/help 显示帮助文档，格式为/help 模块，默认为本帮助
+/apply 申请额外模块权限，格式为/apply 模块1 （模块2...）
+/mute 屏蔽模块系统消息，格式为/mute （模块1 模块2...），默认全部屏蔽
 /unmute 解除系统消息屏蔽，格式为/unmute （模块1 模块2...），默认全部解除
-/mod    显示模块列表，格式为/mod （all），默认显示已有权限的模块，all显示全部模块
-/stc    给coffeecaty留言 ，格式为/stc 留言内容
-/sts    给summyxy留言 ，格式为/sts 留言内容
+/mod 显示模块列表，格式为/mod （all），默认显示已有权限的模块，all显示全部模块
+/update_mod 更新自己的模块权限信息
+/stc 给coffeecaty留言 ，格式为/stc 留言内容
+/sts 给summyxy留言 ，格式为/sts 留言内容
 /repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍
 '''
     update.message.reply_text(text)
@@ -30,7 +31,8 @@ def help_admin(update):
         text = text + '屏蔽列表（mute），'
     text=text+'默认输出user列表'
     if user_date.superadmin.user_list.inornot(update.message.chat_id):
-        text = text + '\n/mod 增加显示指定玩家可使用的模块列表，格式为/mod （用户1 用户2...）'
+        text = text + '''\n/mod 增加显示指定玩家可使用的模块列表，格式为/mod （用户1 用户2...）
+/update_mod 增加更新指定玩家的模块权限信息，格式为/update_mod （用户1 用户2）'''
     text = text + '''\n/add 增加新用户，格式为/add 模块 （用户1 用户2...），默认添加全部已提交申请的用户。
 /apply_refuse 拒绝用户的申请请求，格式为/apply_refuse 模块 （用户1 用户2），默认拒绝队列中全部的请求。
 /remove 删除用户，格式为/remove 模块 用户1 （用户2...)
