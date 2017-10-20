@@ -394,6 +394,7 @@ def copy(bot, update, args):
         update.message.reply_text('并没有 ' + args[0] + ' 这种模块哦~请好好检查输入的模块名~')
         return
     for a in args[1:]:
+            do=0
             for n in user_date.for_group[3:]:
                 if n.name == a:
                     for m in purpose.add(n.user_list.list):
@@ -407,7 +408,8 @@ def copy(bot, update, args):
                                                            timedelta(hours=8)) +
                                                        'UTC+8:00)')
                     update.message.reply_text(a+' 模块用户已成功导入至 '+purpose.name+' 模块中' )
-                    break
+                    do=1
+            if do == 0:
             update.message.reply_text('并没有 ' + a + ' 这种模块~请好好检查输入的模块名~')
 
 def update_mod(bot,update,args):
@@ -440,5 +442,7 @@ def update_mod(bot,update,args):
             text='您的权限信息已经更新完毕喵~'
         else:
             text=user_date.alluser.username(member)+' 的权限信息已经更新完毕喵~'
+        update.message.reply_text(text)
+
 
 
