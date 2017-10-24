@@ -410,7 +410,7 @@ def copy(bot, update, args):
                     update.message.reply_text(a+' 模块用户已成功导入至 '+purpose.name+' 模块中' )
                     do=1
             if do == 0:
-            update.message.reply_text('并没有 ' + a + ' 这种模块~请好好检查输入的模块名~')
+                update.message.reply_text('并没有 ' + a + ' 这种模块~请好好检查输入的模块名~')
 
 def update_mod(bot,update,args):
     log(update)

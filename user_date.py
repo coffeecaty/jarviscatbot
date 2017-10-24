@@ -336,7 +336,7 @@ superadmin = usergroup(
             'apply', []), List(
                 'mute', []), List(
                     'ban', []))
-alluser = full_usergroup('alluser', 'alluser', superadmin)
+alluser = full_usergroup('alluser', 'alluser', me)
 decode_admin = usergroup(
     'decode_admin', 'decode', superadmin, List(
         'user', []), List(
