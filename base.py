@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 from logprint import log
 from datetime import timedelta
-import user_date,helpdoc,user_command
+from decorator import al_in
+import user_date,helpdoc,user_command,sqlite3
 
 
 def start(bot, update):
@@ -99,6 +100,13 @@ def repeat(bot, update, args):
             message = text + ('\n' + text) * (time - 1)
             update.message.reply_text(message)
 
+@al_in(user_date.me)
+def mkdb(bot,update):
+    try:
+        import db_config
+        update.message.reply_text('数据库初始化已完成喵~有饼干吃吗？')
+    except sqlite3.OperationalError:
+        update.message.reply_text('数据库已存在，无需初始化喵~')
 
 def talk(bot, update):
     log(update)

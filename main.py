@@ -38,6 +38,7 @@ def main():
     dp.add_handler(CommandHandler("sts", base.sts, pass_args=True))
     dp.add_handler(CommandHandler("repeat", base.repeat, pass_args=True))
     dp.add_handler(MessageHandler([Filters.text], base.talk))
+    dp.add_handler(CommandHandler('mkdb', base.mkdb))
 
     # from user_command
     dp.add_handler(CommandHandler('iamcat', user_command.iamcat))
@@ -93,6 +94,23 @@ def main():
 
     # from helopdoc
     dp.add_handler(CommandHandler('help', helpdoc.help, pass_args=True))
+
+    # from ENL_tianjin
+
+    dp.add_handler(CommandHandler('enl', ENL_tianjin.enl,pass_args=True))
+    dp.add_handler(CommandHandler('create', ENL_tianjin.create,pass_args=True))
+    dp.add_handler(CommandHandler('event', ENL_tianjin.event,pass_args=True))
+    dp.add_handler(CommandHandler('detail', ENL_tianjin.detail,pass_args=True))
+    dp.add_handler(CommandHandler('join', ENL_tianjin.join,pass_args=True))
+    dp.add_handler(CommandHandler('unjoin', ENL_tianjin.unjoin,pass_args=True))
+    dp.add_handler(CommandHandler('holder', ENL_tianjin.holder,pass_args=True))
+    dp.add_handler(CommandHandler('news', ENL_tianjin.news,pass_args=True))
+    dp.add_handler(CommandHandler('close', ENL_tianjin.close,pass_args=True))
+    dp.add_handler(CommandHandler('reopen', ENL_tianjin.reopen,pass_args=True))
+    dp.add_handler(CommandHandler('invite', ENL_tianjin.invite,pass_args=True))
+    dp.add_handler(CommandHandler('showlist', ENL_tianjin.showlist,pass_args=True))
+    dp.add_handler(CommandHandler('event_del', ENL_tianjin.event_del,pass_args=True))
+    dp.add_handler(CommandHandler('event_rm', ENL_tianjin.event_rm,pass_args=True))
 
     # from timer
     dp.add_handler(CommandHandler("timer", timer.timer,

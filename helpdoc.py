@@ -15,6 +15,8 @@ def help_base(update):
 /sts 给summyxy留言 ，格式为/sts 留言内容
 /repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍
 '''
+    if user_date.me.user_list.inornot(update.message.chat_id):
+        text = text + '\n/mkdb 初始化数据库'
     update.message.reply_text(text)
 
 
@@ -52,23 +54,50 @@ def help_admin(update):
     update.message.reply_text(text)
 
 def help_timer(update):
-    hb = '''欢迎使用timer模块功能：
+    text = '''欢迎使用timer模块功能：
 /timer 设置时间，格式为“秒 分 时 天”，以空格分隔，可由后向前缺省，如/set 60或/set 0 1均为1分钟
 /untimer 取消已设置的闹钟'''
-    update.message.reply_text(hb)
+    update.message.reply_text(text)
 
+def help_ENL_tianjin(update):
+    text = '''欢迎使用ENL_tianjin模块功能，初次使用请务必先进行个人特工信息维护：
+特别提示：本模块中绝大部分对用户/活动编号操作均支持批量操作，但强烈建议一次只对一个目标进行操作，尤其是showlist功能
+/enl 个人特工信息维护，格式为/enl 特工名 特工等级'''
+    if user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id):
+        text = text + '\n/create 创建一个活动，格式为/create 活动名 （活动类型 详细介绍），活动类型分为open或HQ，默认为open'
+    text=text+'''
+/event 显示全部活动，格式为/event （all），默认只显示进行中的活动，all显示全部活动
+/detail 显示活动的详细情报，格式为/event 活动编号1 （活动编号2 ...）
+/join 报名参与活动，格式为/join 活动编号1 （活动编号2 ...）
+/unjoin 取消活动的报名，格式为/unjoin 活动编号1 （活动编号2 ...）
+/holder 设定活动的主办人，格式为/holder 活动编号 用户1 （用户2...），您需为该活动的主办人方可执行，被设定用户需已报名该活动
+/news 更新活动进度，格式为/news 活动编号 更新内容，您需为该活动的主办人方可执行，更新将记录在detail信息内并通知全体参加人
+/close 结束活动，格式为/close 活动编号1 （活动编号2 ...），您需为该活动的主办人方可执行'''
+    if user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id):
+        text = text + '，一旦活动close则会对全部玩家公开，HQ类活动请慎重close'
+    text = text + '''
+/reopen 重启活动，格式为/reopen 活动编号1 （活动编号2 ...），您需为该活动的主办人方可执行，支持批量操作但不建议，我也不知道为什么会有这种奇怪的功能'''
+    if user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id):
+        text = text + '''
+/invite 将用户加入活动，格式为/invite 活动编号 用户1 （用户2...），本功能仅为HQ类活动手动添加非HQ人员时使用，其他情况请尽量等待玩家主动报名'''
+    text = text + '''
+/showlist 显示参加活动的用户列表，格式为 /showlist 活动编号1 （活动编号2 ...），您需为该活动的主办人方可执行'''
+    if user_date.me.user_list.inornot(update.message.chat_id):
+        text = text + '''
+/event_del 删除活动，格式为/event_del 活动编号1 （活动编号2...）''' + config.keyuser + '''
+/event_rm 从活动中移出特工，格式为/event_rm 活动编号 用户1 （用户2...） ''' + config.keyuser
+    update.message.reply_text(text)
 
 def help(bot, update, args):
     if args == [] or args[0] == 'base':
         help_base(update)
-    elif args[0] in (['admin'] + user_date.admin_list.namelist()):
+    elif args[0] in (['admin'] + user_date.admin_list.namelist()) and user_date.admin_list.inany(update.message.chat_id):
         help_admin(update)
     elif args[0] == 'decode':
         update.message.reply_text('还没写')
         # help_decode()
-    elif args[0] in (user_date.ENL_tianjin_group.namelist()):
-        update.message.reply_text('还没写')
-        # help_ENL()
+    elif args[0] in (user_date.ENL_tianjin_group.namelist()) and user_date.ENL_tianjin_group.inany(update.message.chat_id):
+        help_ENL_tianjin()
     elif args[0] == 'timer':
          help_timer(update)
     else:
