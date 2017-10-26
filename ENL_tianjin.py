@@ -163,10 +163,11 @@ def detail(bot, update, args):
             c.execute('SELECT count(*) FROM ' + name + str(num) + ' WHERE id = ?;', (update.message.chat_id,))
             asker = c.fetchone()[0]
             c.close()
-            if (not asker) and status=='HQ' and (not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id)):
+            if not asker:
+               if status=='HQ' and (not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id)):
                 update.message.reply_text('并没有编号为' + str(num) + '的活动')
                 continue
-            elif not asker:
+               else:
                 n = 0
                 while n < len(result[2]):
                     if result[2][n] == '\n':
