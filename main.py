@@ -2,11 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import base
-import user_command
-import helpdoc
-import timer
-import logging
+import base,user_command,helpdoc,timer,logging,ENL_tianjin
 
 # Enable logging
 logging.basicConfig(

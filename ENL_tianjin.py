@@ -142,6 +142,7 @@ def event(bot, update, args):
 
 @al_in(user_date.ENL_tianjin)
 def detail(bot, update, args):
+    global detail
     log(update)
     if len(args) == 0:
         update.message.reply_text('请输入您要了解的活动的活动编号喵！')
@@ -172,9 +173,10 @@ def detail(bot, update, args):
                         break
                     else:
                         n += 1
+                update.message.reply_text(name + '\n' + detail)
             else:
                 detail=result[2]
-            update.message.reply_text(name + '\n' + detail)
+                update.message.reply_text(name + '\n' + detail)
         except (IndexError, ValueError, TypeError):
             update.message.reply_text('并没有编号为' + str(num) + '的活动')
 

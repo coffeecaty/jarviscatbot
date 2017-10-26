@@ -97,7 +97,7 @@ def help(bot, update, args):
         update.message.reply_text('还没写')
         # help_decode()
     elif args[0] in (user_date.ENL_tianjin_group.namelist()) and user_date.ENL_tianjin_group.inany(update.message.chat_id):
-        help_ENL_tianjin()
+        help_ENL_tianjin(update)
     elif args[0] == 'timer':
          help_timer(update)
     else:
