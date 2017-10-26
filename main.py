@@ -17,7 +17,7 @@ def main():
     # 导入config参数
     try:
         import config
-    except ImportExcept:
+    except ImportError:
         print('no config file')
         import sys
         sys.exit(0)

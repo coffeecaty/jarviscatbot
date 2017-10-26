@@ -259,7 +259,7 @@ class full_usergroup(usergroup):
             for n in date:
                 if self.user_list.inornot(n):
                     namegroup.append(
-                        self.username_list.list[user_list.index(n)])
+                        self.username_list.list[self.user_list.index(n)])
                 else:
                     'unknow ' + str(n)
             return namegroup
@@ -275,7 +275,7 @@ class full_usergroup(usergroup):
             for n in date:
                 if self.username_list.inornot(n):
                     idgroup.append(
-                        self.user_list.list[username_list.index(n)])
+                        self.user_list.list[self.username_list.index(n)])
                 else:
                     'unknow'
             return idgroup
