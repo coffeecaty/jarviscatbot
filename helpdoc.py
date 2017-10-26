@@ -13,8 +13,7 @@ def help_base(update):
 /update_mod 更新自己的模块权限信息
 /stc 给coffeecaty留言 ，格式为/stc 留言内容
 /sts 给summyxy留言 ，格式为/sts 留言内容
-/repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍
-'''
+/repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍'''
     if user_date.me.user_list.inornot(update.message.chat_id):
         text = text + '\n/mkdb 初始化数据库'
     update.message.reply_text(text)
@@ -64,7 +63,7 @@ def help_ENL_tianjin(update):
 特别提示：本模块中绝大部分对用户/活动编号操作均支持批量操作，但强烈建议一次只对一个目标进行操作，尤其是showlist功能
 /enl 个人特工信息维护，格式为/enl 特工名 特工等级'''
     if user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id):
-        text = text + '\n/create 创建一个活动，格式为/create 活动名 （活动类型 详细介绍），活动类型分为open或HQ，默认为open'
+        text = text + '\n/create 创建一个活动，格式为/create 活动名 （活动类型 详细介绍），活动名不能以数字开头，活动类型分为open或HQ，默认为open'
     text=text+'''
 /event 显示全部活动，格式为/event （all），默认只显示进行中的活动，all显示全部活动
 /detail 显示活动的详细情报，格式为/event 活动编号1 （活动编号2 ...）

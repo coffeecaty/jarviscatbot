@@ -18,12 +18,12 @@ def start(bot, update):
             update.message.reply_text(
                 '您好，' +
                 update.message.from_user.first_name +
-                '，我是辅助coffeecaty照顾summy的专属小猫，虽然也提供一些其他服务，但基本上你通过我只能...看caty秀恩爱啊~~~')
+                '，我是辅助coffeecaty照顾summy的专属小猫，主要负责帮caty秀恩爱，当然我也可以提供一些其他服务，但是项目太多我介绍不过来，请用/help自己慢慢看吧~')
         else:
             update.message.reply_text(
                 '您好，@' +
                 update.message.from_user.username +
-                '，我是辅助coffeecaty照顾summy的专属小猫，虽然也提供一些其他服务，但基本上你通过我只能...看caty秀恩爱啊~~~')
+                '，我是辅助coffeecaty照顾summy的专属小猫，主要负责帮caty秀恩爱，当然我也可以提供一些其他服务，但是项目太多我介绍不过来，请用/help自己慢慢看吧~')
 
 
 def miao(bot, update):

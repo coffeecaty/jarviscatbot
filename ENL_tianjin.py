@@ -48,6 +48,12 @@ def create(bot, update, args):
         update.message.reply_text('请至少输入活动名才能创建一个活动喵')
         return
     try:
+        test=int(name[0])
+        update.message.reply_text('活动名不可以用数字开头喵！请重新输入活动名')
+        return
+    except ValueError:
+        pass
+    try:
         if args[1] in ['open', 'HQ']:
             status = args[1]
         else:
@@ -95,6 +101,7 @@ def create(bot, update, args):
             elif (not user_date.ENL_tianjin_HQ.mute_list.inornot(member)) and (
                     not user_date.alluser.mute_list.inornot(member)):
                 bot.sendMessage(member, text='天津启蒙军开展了新的秘密活动: ' + name)
+    update.message.reply_text(name+'活动已成功创建')
 
 
 @al_in(user_date.ENL_tianjin)
