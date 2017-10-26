@@ -8,10 +8,10 @@ def al_in(admin):
         def wrapper(*args, **kw):
             if admin.user_list.inornot(args[1].message.chat_id):
                 return func(*args, **kw)
+            elif admin in user_date.public:
+                    return args[1].message.reply_text('抱歉你没有使用'+admin.name+'模块的权限，请先使用/apply申请对应模块的使用权限后再尝试此操作')
             else:
-                return args[1].message.reply_text(
-                    '抱歉你没有使用本功能的权限，请先申请对应模块的使用权限后再尝试此操作')
-
+                return args[1].message.reply_text('抱歉你没有使此命令的权限，请先使用/apply申请对应模块的使用权限后再尝试此操作')
         return wrapper
 
     return decorator
