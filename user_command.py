@@ -315,7 +315,7 @@ def mod(bot, update, args=[]):
             for a in user_date.for_group:
                 if a.admin.user_list.inornot(update.message.chat_id):
                     dolist.add([a.admin.name, a.name])
-                elif a.user_list.inornot(update.message.chat_id):
+                elif a.inornot(update.message.chat_id):
                     dolist.add([a.name])
             dolist.add(user_date.public.namelist() + ['timer'])
             for n in dolist.list:
