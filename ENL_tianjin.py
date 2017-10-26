@@ -142,7 +142,6 @@ def event(bot, update, args):
 
 @al_in(user_date.ENL_tianjin)
 def detail(bot, update, args):
-    global detail
     log(update)
     if len(args) == 0:
         update.message.reply_text('请输入您要了解的活动的活动编号喵！')
@@ -269,6 +268,7 @@ def unjoin(bot, update, args):
 
 @al_in(user_date.ENL_tianjin)
 def holder(bot, update, args):
+    log(update)
     try:
         tablenum = int(args[0])
         test=args[1]
@@ -321,6 +321,7 @@ def holder(bot, update, args):
 
 @al_in(user_date.ENL_tianjin)
 def news(bot, update, args):
+    log(update)
     try:
         tablenum = int(args[0])
     except (ValueError, IndexError):
@@ -337,7 +338,7 @@ def news(bot, update, args):
         c = conn.cursor()
         c.execute(
             '''SELECT eventname FROM ENL_tianjin WHERE eventnum=?''', (tablenum,))
-        name=c.fetchall()[0]
+        name=c.fetchone()[0]
         tablename = name+args[0]
         c.execute('SELECT id FROM ' +tablename + ' WHERE id=? and holder=1', (update.message.chat_id,))
         holder=user_date.alluser.username(c.fetchone()[0])
@@ -357,6 +358,7 @@ def news(bot, update, args):
 
 @al_in(user_date.ENL_tianjin)
 def close(bot, update, args):
+    log(update)
     if args==[]:
         update.message.reply_text('请按照/close 活动编号 的格式输入命令喵~')
         return
@@ -386,6 +388,7 @@ def close(bot, update, args):
 
 @al_in(user_date.ENL_tianjin)
 def reopen(bot, update, args):
+    log(update)
     if args==[]:
         update.message.reply_text('请按照/reopen 活动编号 的格式输入命令喵~')
         return
@@ -415,6 +418,7 @@ def reopen(bot, update, args):
 
 @idnum
 def invite(bot, update, eventnum,userlist):
+    log(update)
     if not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id):
         return update.message.reply_text('抱歉你没有使用本功能的权限，请先申请对应模块的使用权限后再尝试此操作')
     try:
@@ -442,6 +446,7 @@ def invite(bot, update, eventnum,userlist):
 
 @al_in(user_date.ENL_tianjin)
 def showlist(bot, update, args):
+    log(update)
     if args==[]:
         update.message.reply_text('请按照/showlist 活动编号 的格式输入命令喵~')
         return
@@ -484,6 +489,7 @@ def showlist(bot, update, args):
 
 @al_in(user_date.me)
 def event_del(bot, update, args):
+    log(update)
     if args[-1]!=config.keyuser:
         update.message.reply_text(' 删除操作事关重大，请按照/event_del 活动编号 执行密码的格式输入喵')
         return
@@ -508,6 +514,7 @@ def event_del(bot, update, args):
 
 @al_in(user_date.me)
 def event_rm(bot, update,args):
+    log(update)
     if args[-1]!=config.keyuser or len(args)<3:
         update.message.reply_text(' 删除操作事关重大，请按照/event_rm 活动编号 用户 执行密码的格式输入喵')
         return
