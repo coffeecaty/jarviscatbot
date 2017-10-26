@@ -23,7 +23,7 @@ def iamcat(bot, update):
 def backup(bot, update):
     log(update)
     user_date.backup()
-    update.message.reply_text('资料已经备份完毕，小猫是要休息了吗？0w0')
+    bot.sendMessage(update.message.from_user.id, text='资料已经备份完毕，小猫是要休息了吗？0w0')
 
 
 @al_in(user_date.me)
@@ -32,11 +32,17 @@ def recover(bot, update, args):
     try:
         if args[0] == config.keyuser:
             user_date.recover()
-            update.message.reply_text('资料已经恢复完毕，有饼干吃吗？0w0')
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='资料已经恢复完毕，有饼干吃吗？0w0')
         else:
-            update.message.reply_text('资料恢复事关重大，请输入正确的执行密码执行。0w0')
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='资料恢复事关重大，请输入正确的执行密码执行。0w0')
     except IndexError:
-        update.message.reply_text('资料恢复事关重大，请输入正确的执行密码执行。0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='资料恢复事关重大，请输入正确的执行密码执行。0w0')
 
 
 def printlist(bot, update, args):
@@ -45,11 +51,16 @@ def printlist(bot, update, args):
         if args[0] == n.name and n.admin.user_list.inornot(
                 update.message.from_user.id):
             try:
-                update.message.reply_text(n.printlist(args[1]))
+                bot.sendMessage(
+                    update.message.from_user.id,
+                    text=n.printlist(
+                        args[1]))
             except IndexError:
-                update.message.reply_text(n.printlist('user'))
+                bot.sendMessage(
+                    update.message.from_user.id,
+                    text=n.printlist('user'))
             return
-    update.message.reply_text('喵？并没有你说的这种模块块哦？0w0')
+        bot.sendMessage(update.message.from_user.id, text='喵？并没有你说的这种模块块哦？0w0')
 
 
 def apply(bot, update, args):
@@ -61,14 +72,19 @@ def apply(bot, update, args):
                 if m == n.name:
                     do = 1
                     if n.ban_list.inornot(update.message.from_user.id):
-                        update.message.reply_text(
-                            '喵？您已被管理员封禁' + m + '模块权限，如有疑问请联系模块管理员，小猫我可不知道发生了什么哦！0w0')
+                        bot.sendMessage(
+                            update.message.from_user.id,
+                            text='喵？您已被管理员封禁' +
+                            m +
+                            '模块权限，如有疑问请联系模块管理员，小猫我可不知道发生了什么哦！0w0')
                     elif n.user_list.inornot(update.message.from_user.id):
-                        update.message.reply_text(
-                            '喵？小猫我仔细检查了一下觉得您已经有' + m + '模块的权限了哦！0w0')
+                        bot.sendMessage(
+                            update.message.from_user.id,
+                            text='喵？小猫我仔细检查了一下觉得您已经有' + m + '模块的权限了哦！0w0')
                     elif n.apply_list.inornot(update.message.from_user.id):
-                        update.message.reply_text(
-                            '喵？您已提交过' + m + '模块权限，请耐心等候管理员的批准哦~！0w0')
+                        bot.sendMessage(
+                            update.message.from_user.id,
+                            text='喵？您已提交过' + m + '模块权限，请耐心等候管理员的批准哦~！0w0')
                     else:
                         n.apply(update.message.from_user.id)
                         for a in n.admin.user_list.list:
@@ -82,13 +98,18 @@ def apply(bot, update, args):
                                                 str(update.message.date +
                                                     timedelta(hours=8)) +
                                                 'UTC+8:00)')
-                        update.message.reply_text(
-                            '您的' + m + '模块权限申请小猫我已成功替您提交，请耐心等候管理员的批准哦~！0w0')
+                        bot.sendMessage(
+                            update.message.from_user.id,
+                            text='您的' + m + '模块权限申请小猫我已成功替您提交，请耐心等候管理员的批准哦~！0w0')
                     break
             if not bool(do):
-                update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
+                bot.sendMessage(
+                    update.message.from_user.id,
+                    text='喵？并没有名叫' + m + '的模块块哦？0w0')
     except IndexError:
-        update.message.reply_text('请好好输入你要申请的模块名哦，不然小猫我可帮不了你~0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='请好好输入你要申请的模块名哦，不然小猫我可帮不了你~0w0')
 
 
 @id
@@ -107,9 +128,13 @@ def add(bot, update, type, date=[]):
                                     str(update.message.date +
                                         timedelta(hours=8)) +
                                     'UTC+8:00)')
-            update.message.reply_text('用户授权完毕')
+            bot.sendMessage(update.message.from_user.id, text='用户授权完毕')
             return
-    update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
+    bot.sendMessage(
+        update.message.from_user.id,
+        text='喵？并没有名叫' +
+        type +
+        '的模块块哦？0w0')
 
 
 @id
@@ -122,9 +147,11 @@ def remove(bot, update, type, date):
             if type == n.name and n.admin.user_list.inornot(
                     update.message.from_user.id):
                 n.remove(date)
-                update.message.reply_text('用户移出完毕')
+                bot.sendMessage(update.message.from_user.id, text='用户移出完毕')
                 return
-        update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='喵？并没有名叫' + type + '的模块块哦？0w0')
 
 
 @id
@@ -134,9 +161,13 @@ def apply_refuse(bot, update, type, date=[]):
         if type == n.name and n.admin.user_list.inornot(
                 update.message.from_user.id):
             n.apply_refuse(date)
-            update.message.reply_text('用户移出完毕')
+            bot.sendMessage(update.message.from_user.id, text='用户移出完毕')
             return
-    update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
+    bot.sendMessage(
+        update.message.from_user.id,
+        text='喵？并没有名叫' +
+        type +
+        '的模块块哦？0w0')
 
 
 def clean(bot, update, args):
@@ -146,9 +177,13 @@ def clean(bot, update, args):
             if args[0] == n.name and n.admin.user_list.inornot(
                     update.message.from_user.id) and args[1] == config.keyuser:
                 n.clean()
-                update.message.reply_text('组群清空完毕')
+                bot.sendMessage(update.message.from_user.id, text='组群清空完毕')
                 return
-        update.message.reply_text('喵？并没有名叫' + args[0] + '的模块块哦？0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='喵？并没有名叫' +
+            args[0] +
+            '的模块块哦？0w0')
     except IndexError:
         update.message.reply_text('请按照‘模块名 执行密码’的格式好好输入，不然小猫我可帮不了你~0w0')
 
@@ -163,9 +198,11 @@ def ban(bot, update, type, date):
             if type == n.name and n.admin.user_list.inornot(
                     update.message.from_user.id):
                 n.ban(date)
-                update.message.reply_text('用户封禁完毕')
+                bot.sendMessage(update.message.from_user.id, text='用户封禁完毕')
                 return
-        update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='喵？并没有名叫' + type + '的模块块哦？0w0')
 
 
 @id
@@ -178,9 +215,11 @@ def unban(bot, update, type, date):
             if type == n.name and n.admin.user_list.inornot(
                     update.message.from_user.id):
                 n.unban(date)
-                update.message.reply_text('用户解禁完毕')
+                bot.sendMessage(update.message.from_user.id, text='用户解禁完毕')
                 return
-        update.message.reply_text('喵？并没有名叫' + type + '的模块块哦？0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='喵？并没有名叫' + type + '的模块块哦？0w0')
 
 
 def mute(bot, update, args):
@@ -193,12 +232,15 @@ def mute(bot, update, args):
             for n in user_date.for_group:
                 if m == n.name:
                     n.mute(update.message.from_user.id)
-                    update.message.reply_text(
-                        '已成功屏蔽' + m + '模块的系统消息~！0w0')
+                    bot.sendMessage(
+                        update.message.from_user.id,
+                        text='已成功屏蔽' + m + '模块的系统消息~！0w0')
                     do = 1
                     break
             if not bool(do):
-                update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
+                bot.sendMessage(
+                    update.message.from_user.id,
+                    text='喵？并没有名叫' + m + '的模块块哦？0w0')
 
 
 def unmute(bot, update, args):
@@ -211,12 +253,15 @@ def unmute(bot, update, args):
             for n in user_date.for_group:
                 if m == n.name:
                     n.unmute(update.message.from_user.id)
-                    update.message.reply_text(
-                        '已解除' + m + '模块系统消息的屏蔽~！0w0')
+                    bot.sendMessage(
+                        update.message.from_user.id,
+                        text='已解除' + m + '模块系统消息的屏蔽~！0w0')
                     do = 1
                     break
             if not bool(do):
-                update.message.reply_text('喵？并没有名叫' + m + '的模块块哦？0w0')
+                bot.sendMessage(
+                    update.message.from_user.id,
+                    text='喵？并没有名叫' + m + '的模块块哦？0w0')
 
 
 def notice(bot, update, args):
@@ -226,7 +271,9 @@ def notice(bot, update, args):
         for a in args[1:]:
             text = text + a
         if text == '':
-            update.message.reply_text('小猫我可不知道你想说什么~0w0')
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='小猫我可不知道你想说什么~0w0')
             return
         for n in user_date.for_group:
             if args[0] == n.name and n.admin.user_list.inornot(
@@ -246,15 +293,21 @@ def notice(bot, update, args):
                                 timedelta(
                                     hours=8)) +
                             'UTC+8:00)')
-                update.message.reply_text('通知完毕')
+                bot.sendMessage(update.message.from_user.id, text='通知完毕')
                 return
-        update.message.reply_text('喵？并没有名叫' + args[0] + '的模块块哦？0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='喵？并没有名叫' +
+            args[0] +
+            '的模块块哦？0w0')
     except AttributeError:
         text = ''
         for a in args[1:]:
             text = text + a + ' '
         if text == '':
-            update.message.reply_text('小猫我可不知道你想说什么~0w0')
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='小猫我可不知道你想说什么~0w0')
             return
         noticelist = user_date.List('', [])
         templist = user_date.List('', [])
@@ -283,7 +336,9 @@ def notice(bot, update, args):
                              hours=8)) +
                      'UTC+8:00)')
     except IndexError:
-        update.message.reply_text('请按照‘模块名 通知内容’的格式好好输入，不然小猫我可帮不了你~0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='请按照‘模块名 通知内容’的格式好好输入，不然小猫我可帮不了你~0w0')
 
 
 def mod(bot, update, args=[]):
@@ -313,18 +368,18 @@ def mod(bot, update, args=[]):
             text = 'all mod list:\n'
             dolist = user_date.List('', [])
             for a in user_date.for_group:
-               try:
-                if a.admin.user_list.inornot(update.message.from_user.id):
-                    dolist.add([a.admin.name, a.name])
-                elif a.user_list.inornot(update.message.from_user.id):
-                    dolist.add([a.name])
-               except AttributeError:
-                   continue
+                try:
+                    if a.admin.user_list.inornot(update.message.from_user.id):
+                        dolist.add([a.admin.name, a.name])
+                    elif a.user_list.inornot(update.message.from_user.id):
+                        dolist.add([a.name])
+                except AttributeError:
+                    continue
             dolist.add(user_date.public.namelist() + ['timer'])
             for n in dolist.list:
                 text = text + n + '\n'
             text = text + 'total ' + str(dolist.len()) + ' mod'
-            update.message.reply_text(text)
+            bot.sendMessage(update.message.from_user.id, text=text)
         else:
             text = 'all mod list for ' + user_date.alluser.username(m) + ' :\n'
             mod = 1
@@ -341,7 +396,7 @@ def mod(bot, update, args=[]):
                     continue
             text = text + 'timer\ntotal ' + \
                 str(mod) + ' mod for ' + user_date.alluser.username(m)
-            update.message.reply_text(text)
+            bot.sendMessage(update.message.from_user.id, text=text)
 
 
 def message(bot, update, args):
@@ -349,10 +404,10 @@ def message(bot, update, args):
         user = args[:args.index(':')]
         text = args[args.index(':') + 1:]
     except ValueError:
-        update.message.reply_text(
-            '请按照‘用户1 （用户2...） : 内容’的格式好好输入，小猫才能帮你发送消息哦~0w0')
+        bot.sendMessage(update.message.from_user.id,
+                        text='请按照‘用户1 （用户2...） : 内容’的格式好好输入，小猫才能帮你发送消息哦~0w0')
     if text == []:
-        update.message.reply_text('小猫我可不知道你想说什么~0w0')
+        bot.sendMessage(update.message.from_user.id, text='小猫我可不知道你想说什么~0w0')
     user_id = []
     for n in user:
         try:
@@ -364,7 +419,9 @@ def message(bot, update, args):
             else:
                 user_id.append(user_date.alluser.chat_id(n))
     if user_id == []:
-        update.message.reply_text('小猫我可不知道你想和谁说悄悄话哦~0w0')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='小猫我可不知道你想和谁说悄悄话哦~0w0')
     text_message = ''
     for n in text:
         text_message = text_message + n + ' '
@@ -379,43 +436,59 @@ def message(bot, update, args):
                      timedelta(
                          hours=8)) +
                  'UTC+8:00)')
-        update.message.reply_text(
-            '已向 ' + user_date.alluser.username(m) + ' 成功转达消息')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='已向 ' +
+            user_date.alluser.username(m) +
+            ' 成功转达消息')
 
 
 @al_in(user_date.superadmin)
 def copy(bot, update, args):
     log(update)
-    if len(args)<2:
-        update.message.reply_text('请按照 /copy 目标模块 导入模块 这种模式至少输入两个模块名哦~不然小猫可不知道怎么操作')
+    if len(args) < 2:
+        bot.sendMessage(update.message.from_user.id,
+                        text='请按照 /copy 目标模块 导入模块 这种模式至少输入两个模块名哦~不然小猫可不知道怎么操作')
         return
     purpose = None
     for n in user_date.for_group[3:]:
-            if n.name == args[0]:
-                purpose = n
+        if n.name == args[0]:
+            purpose = n
     if purpose is None:
-        update.message.reply_text('并没有 ' + args[0] + ' 这种模块哦~请好好检查输入的模块名~')
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='并没有 ' +
+            args[0] +
+            ' 这种模块哦~请好好检查输入的模块名~')
         return
     for a in args[1:]:
-            do=0
-            for n in user_date.for_group[3:]:
-                if n.name == a:
-                    for m in purpose.add(n.user_list.list):
-                        if not user_date.alluser.mute_list.inornot(m[1]):
-                            bot.sendMessage(m[1], text='您已获得 ' +
-                                                       m[0] +
-                                                       ' 模块的使用权限，请使用/help ' +
-                                                       m[0] +
-                                                       ' 获取模块使用帮助\n(at ' +
-                                                       str(update.message.date +
-                                                           timedelta(hours=8)) +
-                                                       'UTC+8:00)')
-                    update.message.reply_text(a+' 模块用户已成功导入至 '+purpose.name+' 模块中' )
-                    do=1
-            if do == 0:
-                update.message.reply_text('并没有 ' + a + ' 这种模块~请好好检查输入的模块名~')
+        do = 0
+        for n in user_date.for_group[3:]:
+            if n.name == a:
+                for m in purpose.add(n.user_list.list):
+                    if not user_date.alluser.mute_list.inornot(m[1]):
+                        bot.sendMessage(m[1], text='您已获得 ' +
+                                                   m[0] +
+                                                   ' 模块的使用权限，请使用/help ' +
+                                                   m[0] +
+                                                   ' 获取模块使用帮助\n(at ' +
+                                                   str(update.message.date +
+                                                       timedelta(hours=8)) +
+                                                   'UTC+8:00)')
+                bot.sendMessage(
+                    update.message.from_user.id,
+                    text=a +
+                    ' 模块用户已成功导入至 ' +
+                    purpose.name +
+                    ' 模块中')
+                do = 1
+        if do == 0:
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='并没有 ' + a + ' 这种模块~请好好检查输入的模块名~')
 
-def update_mod(bot,update,args):
+
+def update_mod(bot, update, args):
     log(update)
     if user_date.superadmin.user_list.inornot(update.message.from_user.id):
         dolist = []
@@ -431,7 +504,7 @@ def update_mod(bot,update,args):
         if dolist == []:
             dolist = [update.message.from_user.id]
     else:
-        dolist=[update.message.from_user.id]
+        dolist = [update.message.from_user.id]
 
     for member in dolist:
         for group in user_date.for_group[2:]:
@@ -441,11 +514,8 @@ def update_mod(bot,update,args):
             user_date.ENL_tianjin.add(member)
         if user_date.ENL_tianjin.ban_list.inornot(member):
             user_date.ENL_tianjin_HQ.ban(member)
-        if member==update.message.from_user.id:
-            text='您的权限信息已经更新完毕喵~'
+        if member == update.message.from_user.id:
+            text = '您的权限信息已经更新完毕喵~'
         else:
-            text=user_date.alluser.username(member)+' 的权限信息已经更新完毕喵~'
+            text = user_date.alluser.username(member) + ' 的权限信息已经更新完毕喵~'
         update.message.reply_text(text)
-
-
-

@@ -3,7 +3,7 @@
 import user_date,config
 
 
-def help_base(update):
+def help_base(bot):
     text = '''/start 开始交互
 /help 显示帮助文档，格式为/help 模块，默认为本帮助
 /apply 申请额外模块权限，格式为/apply 模块1 （模块2...）
@@ -16,10 +16,10 @@ def help_base(update):
 /repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍'''
     if user_date.me.user_list.inornot(update.message.from_user.id):
         text = text + '\n/mkdb 初始化数据库'
-    update.message.reply_text(text)
+        bot.sendMessage(update.message.from_user.id, text=text)
 
 
-def help_admin(update):
+def help_admin(bot):
     text = '/help admin 显示本帮助'
     if user_date.me.user_list.inornot(update.message.from_user.id):
         text = text + '''
@@ -50,15 +50,15 @@ def help_admin(update):
             text = text + n.name + ' '
             mod += 1
     text = text + '\ntotal ' + str(mod) + ' mod group'
-    update.message.reply_text(text)
+    bot.sendMessage(update.message.from_user.id, text=text)
 
-def help_timer(update):
+def help_timer(bot):
     text = '''欢迎使用timer模块功能：
 /timer 设置时间，格式为“秒 分 时 天”，以空格分隔，可由后向前缺省，如/set 60或/set 0 1均为1分钟
 /untimer 取消已设置的闹钟'''
-    update.message.reply_text(text)
+    bot.sendMessage(update.message.from_user.id, text=text)
 
-def help_ENL_tianjin(update):
+def help_ENL_tianjin(bot):
     text = '''欢迎使用ENL_tianjin模块功能，初次使用请务必先进行个人特工信息维护：
 特别提示：本模块中绝大部分对用户/活动编号操作均支持批量操作，但强烈建议一次只对一个目标进行操作，尤其是showlist功能
 /enl 个人特工信息维护，格式为/enl 特工名 特工等级'''
@@ -85,11 +85,11 @@ def help_ENL_tianjin(update):
         text = text + '''
 /event_del 删除活动，格式为/event_del 活动编号1 （活动编号2...）''' + config.keyuser + '''
 /event_rm 从活动中移出特工，格式为/event_rm 活动编号 用户1 （用户2...） ''' + config.keyuser
-    update.message.reply_text(text)
+    bot.sendMessage(update.message.from_user.id,text=text)
 
 def help(bot, update, args):
     if args == [] or args[0] == 'base':
-        help_base(update)
+        help_base(bot)
     elif args[0] in (['admin'] + user_date.admin_list.namelist()) and user_date.admin_list.inany(update.message.from_user.id):
         help_admin(update)
     elif args[0] == 'decode':
@@ -100,4 +100,4 @@ def help(bot, update, args):
     elif args[0] == 'timer':
          help_timer(update)
     else:
-        update.message.reply_text('并没有这种模块的帮助文档喵，请核对输入模块名以及你是否有该模块的使用权限。')
+        bot.sendMessage(update.message.from_user.id, text='并没有这种模块的帮助文档喵，请核对输入模块名以及你是否有该模块的使用权限。')
