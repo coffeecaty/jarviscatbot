@@ -313,10 +313,13 @@ def mod(bot, update, args=[]):
             text = 'all mod list:\n'
             dolist = user_date.List('', [])
             for a in user_date.for_group:
+               try:
                 if a.admin.user_list.inornot(update.message.chat_id):
                     dolist.add([a.admin.name, a.name])
-                elif a.inornot(update.message.chat_id):
+                elif a.user_list.inornot(update.message.chat_id):
                     dolist.add([a.name])
+               except AttributeError:
+                   continue
             dolist.add(user_date.public.namelist() + ['timer'])
             for n in dolist.list:
                 text = text + n + '\n'

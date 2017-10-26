@@ -164,8 +164,6 @@ class usergroup(object):
             text = text + '喵？并没有这种列表可以打印哦？'
         return text
 
-    def inornot(self,date):
-        return self.user_list.inornot(date)
 
 
 class groupgroup(object):
@@ -226,11 +224,6 @@ class groupgroup(object):
                 return True
         return False
 
-    def inornot(self, date):
-        for n in self.list:
-            if n.user_list.inornot(date):
-                return True
-        return False
 
     def namelist(self):
         namelist = []
