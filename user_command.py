@@ -11,9 +11,9 @@ import config
 def iamcat(bot, update):
     log(update)
     if update.message.from_user.username == config.keyuser:
-        user_date.me.add(update.message.chat_id)
-        user_date.superadmin.add(update.message.chat_id)
-        user_date.allgroup.add(update.message.chat_id)
+        user_date.me.add(update.message.from_user.id)
+        user_date.superadmin.add(update.message.from_user.id)
+        user_date.allgroup.add(update.message.from_user.id)
         update.message.reply_text('欢迎回来，我的大猫~0w0')
     else:
         update.message.reply_text('小猫我可不傻，你根本不是大猫哼哼哼~0w0')
@@ -43,7 +43,7 @@ def printlist(bot, update, args):
     log(update)
     for n in user_date.for_group:
         if args[0] == n.name and n.admin.user_list.inornot(
-                update.message.chat_id):
+                update.message.from_user.id):
             try:
                 update.message.reply_text(n.printlist(args[1]))
             except IndexError:
@@ -60,17 +60,17 @@ def apply(bot, update, args):
             for n in user_date.for_group:
                 if m == n.name:
                     do = 1
-                    if n.ban_list.inornot(update.message.chat_id):
+                    if n.ban_list.inornot(update.message.from_user.id):
                         update.message.reply_text(
                             '喵？您已被管理员封禁' + m + '模块权限，如有疑问请联系模块管理员，小猫我可不知道发生了什么哦！0w0')
-                    elif n.user_list.inornot(update.message.chat_id):
+                    elif n.user_list.inornot(update.message.from_user.id):
                         update.message.reply_text(
                             '喵？小猫我仔细检查了一下觉得您已经有' + m + '模块的权限了哦！0w0')
-                    elif n.apply_list.inornot(update.message.chat_id):
+                    elif n.apply_list.inornot(update.message.from_user.id):
                         update.message.reply_text(
                             '喵？您已提交过' + m + '模块权限，请耐心等候管理员的批准哦~！0w0')
                     else:
-                        n.apply(update.message.chat_id)
+                        n.apply(update.message.from_user.id)
                         for a in n.admin.user_list.list:
                             if not (user_date.alluser.mute_list.inornot(
                                     a) or n.admin.mute_list.inornot(a)):
@@ -96,7 +96,7 @@ def add(bot, update, type, date=[]):
     log(update)
     for n in user_date.for_group:
         if type == n.name and n.admin.user_list.inornot(
-                update.message.chat_id):
+                update.message.from_user.id):
             for m in n.add(date):
                 if not user_date.alluser.mute_list.inornot(m[1]):
                     bot.sendMessage(m[1], text='您已获得 ' +
@@ -120,7 +120,7 @@ def remove(bot, update, type, date):
     else:
         for n in user_date.for_group:
             if type == n.name and n.admin.user_list.inornot(
-                    update.message.chat_id):
+                    update.message.from_user.id):
                 n.remove(date)
                 update.message.reply_text('用户移出完毕')
                 return
@@ -132,7 +132,7 @@ def apply_refuse(bot, update, type, date=[]):
     log(update)
     for n in user_date.for_group:
         if type == n.name and n.admin.user_list.inornot(
-                update.message.chat_id):
+                update.message.from_user.id):
             n.apply_refuse(date)
             update.message.reply_text('用户移出完毕')
             return
@@ -144,7 +144,7 @@ def clean(bot, update, args):
     try:
         for n in user_date.for_group:
             if args[0] == n.name and n.admin.user_list.inornot(
-                    update.message.chat_id) and args[1] == config.keyuser:
+                    update.message.from_user.id) and args[1] == config.keyuser:
                 n.clean()
                 update.message.reply_text('组群清空完毕')
                 return
@@ -161,7 +161,7 @@ def ban(bot, update, type, date):
     else:
         for n in user_date.for_group:
             if type == n.name and n.admin.user_list.inornot(
-                    update.message.chat_id):
+                    update.message.from_user.id):
                 n.ban(date)
                 update.message.reply_text('用户封禁完毕')
                 return
@@ -176,7 +176,7 @@ def unban(bot, update, type, date):
     else:
         for n in user_date.for_group:
             if type == n.name and n.admin.user_list.inornot(
-                    update.message.chat_id):
+                    update.message.from_user.id):
                 n.unban(date)
                 update.message.reply_text('用户解禁完毕')
                 return
@@ -185,14 +185,14 @@ def unban(bot, update, type, date):
 
 def mute(bot, update, args):
     if args == []:
-        user_date.alluser.mute(update.message.chat_id)
+        user_date.alluser.mute(update.message.from_user.id)
         update.message.reply_text('已成功屏蔽全部的系统消息~！0w0')
     else:
         for m in args:
             do = 0
             for n in user_date.for_group:
                 if m == n.name:
-                    n.mute(update.message.chat_id)
+                    n.mute(update.message.from_user.id)
                     update.message.reply_text(
                         '已成功屏蔽' + m + '模块的系统消息~！0w0')
                     do = 1
@@ -203,14 +203,14 @@ def mute(bot, update, args):
 
 def unmute(bot, update, args):
     if args == []:
-        user_date.alluser.unmute(update.message.chat_id)
+        user_date.alluser.unmute(update.message.from_user.id)
         update.message.reply_text('已成功解除全部系统消息的屏蔽状态~！0w0')
     else:
         for m in args:
             do = 0
             for n in user_date.for_group:
                 if m == n.name:
-                    n.unmute(update.message.chat_id)
+                    n.unmute(update.message.from_user.id)
                     update.message.reply_text(
                         '已解除' + m + '模块系统消息的屏蔽~！0w0')
                     do = 1
@@ -230,7 +230,7 @@ def notice(bot, update, args):
             return
         for n in user_date.for_group:
             if args[0] == n.name and n.admin.user_list.inornot(
-                    update.message.chat_id):
+                    update.message.from_user.id):
                 for m in n.user_list.list:
                     if not (n.mute_list.inornot(m)
                             or user_date.alluser.mute_list.inornot(a)):
@@ -260,7 +260,7 @@ def notice(bot, update, args):
         templist = user_date.List('', [])
         for n in user_date.for_group:
             if args[0] == n.name and n.admin.user_list.inornot(
-                    update.message.chat_id):
+                    update.message.from_user.id):
                 noticelist.name = n.name
                 for m in n.list:
                     templist.add(m.user_list.list)
@@ -291,9 +291,9 @@ def mod(bot, update, args=[]):
     if args == [] or (
         ('all' not in args)and (
             not user_date.superadmin.user_list.inornot(
-            update.message.chat_id))):
-        change = [update.message.chat_id]
-    elif ('all' in args)and (not user_date.superadmin.user_list.inornot(update.message.chat_id)):
+            update.message.from_user.id))):
+        change = [update.message.from_user.id]
+    elif ('all' in args)and (not user_date.superadmin.user_list.inornot(update.message.from_user.id)):
         change = ['all']
     else:
         change = []
@@ -314,9 +314,9 @@ def mod(bot, update, args=[]):
             dolist = user_date.List('', [])
             for a in user_date.for_group:
                try:
-                if a.admin.user_list.inornot(update.message.chat_id):
+                if a.admin.user_list.inornot(update.message.from_user.id):
                     dolist.add([a.admin.name, a.name])
-                elif a.user_list.inornot(update.message.chat_id):
+                elif a.user_list.inornot(update.message.from_user.id):
                     dolist.add([a.name])
                except AttributeError:
                    continue
@@ -417,7 +417,7 @@ def copy(bot, update, args):
 
 def update_mod(bot,update,args):
     log(update)
-    if user_date.superadmin.user_list.inornot(update.message.chat_id):
+    if user_date.superadmin.user_list.inornot(update.message.from_user.id):
         dolist = []
         for n in args:
             try:
@@ -429,9 +429,9 @@ def update_mod(bot,update,args):
                 else:
                     dolist.append(user_date.alluser.chat_id(n))
         if dolist == []:
-            dolist = [update.message.chat_id]
+            dolist = [update.message.from_user.id]
     else:
-        dolist=[update.message.chat_id]
+        dolist=[update.message.from_user.id]
 
     for member in dolist:
         for group in user_date.for_group[2:]:
@@ -441,7 +441,7 @@ def update_mod(bot,update,args):
             user_date.ENL_tianjin.add(member)
         if user_date.ENL_tianjin.ban_list.inornot(member):
             user_date.ENL_tianjin_HQ.ban(member)
-        if member==update.message.chat_id:
+        if member==update.message.from_user.id:
             text='您的权限信息已经更新完毕喵~'
         else:
             text=user_date.alluser.username(member)+' 的权限信息已经更新完毕喵~'

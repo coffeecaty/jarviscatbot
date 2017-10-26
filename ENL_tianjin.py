@@ -20,7 +20,7 @@ def enl(bot, update, args):
     try:
         c.execute(
             "INSERT INTO ENL_agent(id,username,agentname,level) VALUES (?,?,?,?)",
-            (update.message.chat_id,
+            (update.message.from_user.id,
              '@' +
              update.message.from_user.username,
              agentname,
@@ -32,7 +32,7 @@ def enl(bot, update, args):
              update.message.from_user.username,
              agentname,
              level,
-             update.message.chat_id))
+             update.message.from_user.id))
     conn.commit()
     conn.close()
     update.message.reply_text(
@@ -61,7 +61,7 @@ def create(bot, update, args):
     except IndexError:
         status = 'open'
 
-    detail = str(update.message.date +timedelta(hours=8))+' '+user_date.alluser.username(update.message.chat_id)+' -- 创建活动：'
+    detail = str(update.message.date +timedelta(hours=8))+' '+user_date.alluser.username(update.message.from_user.id)+' -- 创建活动：'
     for text in args[2:]:
         detail += text + ' '
 
@@ -84,19 +84,19 @@ def create(bot, update, args):
         'INSERT INTO ' +
         tablename +
         '(id,holder) VALUES (?,1)',
-        (update.message.chat_id,
+        (update.message.from_user.id,
          ))
     conn.commit()
     conn.close()
     if status == 'open':
         for member in user_date.ENL_tianjin.user_list.list:
-            if member == update.message.chat_id:
+            if member == update.message.from_user.id:
                 continue
             elif (not user_date.ENL_tianjin.mute_list.inornot(member)) and (not user_date.alluser.mute_list.inornot(member)):
                 bot.sendMessage(member, text='天津启蒙军开展了新的活动: ' + name)
     else:
         for member in user_date.ENL_tianjin_HQ.user_list.list:
-            if member == update.message.chat_id:
+            if member == update.message.from_user.id:
                 continue
             elif (not user_date.ENL_tianjin_HQ.mute_list.inornot(member)) and (
                     not user_date.alluser.mute_list.inornot(member)):
@@ -109,7 +109,7 @@ def event(bot, update, args):
     log(update)
     conn = sqlite3.connect('jarviscatbot.db')
     c = conn.cursor()
-    if user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id):
+    if user_date.ENL_tianjin_HQ.user_list.inornot(update.message.from_user.id):
         if len(args) > 0 and args[0] == 'all':
             c.execute('SELECT eventnum,eventname,class FROM ENL_tianjin')
         else:
@@ -125,7 +125,7 @@ def event(bot, update, args):
     list = c.fetchall()
     text = '活动编号'.ljust(6) + '|' + '活动名'.ljust(27) + '|' + '状态'.ljust(8)+ '|' + '参与情况'
     for e in list:
-        c.execute('SELECT holder FROM '+e[1]+str(e[0])+' WHERE id=? ',(update.message.chat_id,))
+        c.execute('SELECT holder FROM '+e[1]+str(e[0])+' WHERE id=? ',(update.message.from_user.id,))
         try:
             if c.fetchone()[0]:
                 join='holder'
@@ -166,11 +166,11 @@ def detail(bot, update, args):
             status = result[1]
             conn = sqlite3.connect('jarviscatbot.db')
             c = conn.cursor()
-            c.execute('SELECT count(*) FROM ' + name + str(num) + ' WHERE id = ?;', (update.message.chat_id,))
+            c.execute('SELECT count(*) FROM ' + name + str(num) + ' WHERE id = ?;', (update.message.from_user.id,))
             asker = c.fetchone()[0]
             c.close()
             if not asker:
-               if status=='HQ' and (not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id)):
+               if status=='HQ' and (not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.from_user.id)):
                 update.message.reply_text('并没有编号为' + str(num) + '的活动')
                 continue
                else:
@@ -212,7 +212,7 @@ def join(bot, update, args):
         if status == 'close':
             update.message.reply_text('活动：' + eventname + ' 已经结束，无法继续报名')
             continue
-        elif status == 'HQ' and (not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id)):
+        elif status == 'HQ' and (not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.from_user.id)):
             update.message.reply_text('并没有编号为' + str(num) + '的活动')
             continue
         conn = sqlite3.connect('jarviscatbot.db')
@@ -222,7 +222,7 @@ def join(bot, update, args):
                 'INSERT INTO ' +
                 tablename +
                 '(id,holder) VALUES (?,0)',
-                (update.message.chat_id,
+                (update.message.from_user.id,
                  ))
             conn.commit()
             conn.close()
@@ -256,15 +256,15 @@ def unjoin(bot, update, args):
         if status == 'close':
             update.message.reply_text('你不能退出已经结束的活动哦~')
             continue
-        elif status == 'HQ' and (not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id)):
+        elif status == 'HQ' and (not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.from_user.id)):
             update.message.reply_text('并没有编号为' + str(num) + '的活动')
             continue
         conn = sqlite3.connect('jarviscatbot.db')
         c = conn.cursor()
-        c.execute('SELECT COUNT(*)  FROM ' + tablename + ' WHERE id = ?', (update.message.chat_id,))
+        c.execute('SELECT COUNT(*)  FROM ' + tablename + ' WHERE id = ?', (update.message.from_user.id,))
         if c.fetchone()[0]:
             c.execute('DELETE FROM ' + tablename +
-                      ' WHERE id = ?;', (update.message.chat_id,))
+                      ' WHERE id = ?;', (update.message.from_user.id,))
             conn.commit()
             conn.close()
             update.message.reply_text(
@@ -294,7 +294,7 @@ def holder(bot, update, args):
             return
         tablename = result[0] + args[0]
         c.execute('SELECT holder FROM ' + tablename +
-                  ' WHERE id=?', (update.message.chat_id,))
+                  ' WHERE id=?', (update.message.from_user.id,))
         if not c.fetchone()[0]:
             update.message.reply_text('活动不存在或者你并不是本活动的主办者喵。')
             c.close()
@@ -347,13 +347,13 @@ def news(bot, update, args):
             '''SELECT eventname FROM ENL_tianjin WHERE eventnum=?''', (tablenum,))
         name=c.fetchone()[0]
         tablename = name+args[0]
-        c.execute('SELECT id FROM ' +tablename + ' WHERE id=? and holder=1', (update.message.chat_id,))
+        c.execute('SELECT id FROM ' +tablename + ' WHERE id=? and holder=1', (update.message.from_user.id,))
         holder=user_date.alluser.username(c.fetchone()[0])
         c.execute( 'SELECT detail FROM ENL_tianjin WHERE eventnum = ?', (tablenum,))
         detail=c.fetchone()[0]+'\n'+str(update.message.date + timedelta(hours=8))+' '+holder + ' -- '+news
         c.execute('UPDATE ENL_tianjin SET detail =? WHERE eventnum = ?',(detail,tablenum))
         conn.commit()
-        c.execute('SELECT id FROM ' +tablename + ' WHERE id!=?', (update.message.chat_id,))
+        c.execute('SELECT id FROM ' +tablename + ' WHERE id!=?', (update.message.from_user.id,))
         result=c.fetchall()
         conn.close()
         for n in result:
@@ -381,7 +381,7 @@ def close(bot, update, args):
             if status =='close':
                 update.message.reply_text(event + ' 活动已经结束了喵。')
                 continue
-            c.execute('SELECT id FROM ' + tablename + ' WHERE id=? and holder=1', (update.message.chat_id,))
+            c.execute('SELECT id FROM ' + tablename + ' WHERE id=? and holder=1', (update.message.from_user.id,))
             holder = user_date.alluser.username(c.fetchone()[0])
             c.execute('SELECT detail FROM ENL_tianjin WHERE eventnum = ?', (tablenum,))
             detail = c.fetchone()[0] + '\n' + str(
@@ -411,7 +411,7 @@ def reopen(bot, update, args):
             if status !='close':
                 update.message.reply_text(event + ' 活动还没结束，无法重启喵。')
                 continue
-            c.execute('SELECT id FROM ' + tablename + ' WHERE id=? and holder=1', (update.message.chat_id,))
+            c.execute('SELECT id FROM ' + tablename + ' WHERE id=? and holder=1', (update.message.from_user.id,))
             holder = user_date.alluser.username(c.fetchone()[0])
             c.execute('SELECT detail FROM ENL_tianjin WHERE eventnum = ?', (tablenum,))
             detail = c.fetchone()[0] + '\n' + str(
@@ -426,7 +426,7 @@ def reopen(bot, update, args):
 @idnum
 def invite(bot, update, eventnum,userlist):
     log(update)
-    if not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id):
+    if not user_date.ENL_tianjin_HQ.user_list.inornot(update.message.from_user.id):
         return update.message.reply_text('抱歉你没有使用本功能的权限，请先申请对应模块的使用权限后再尝试此操作')
     try:
         tablenum = int(eventnum)
@@ -439,7 +439,7 @@ def invite(bot, update, eventnum,userlist):
         if status == 'close':
             update.message.reply_text(event + ' 活动已经结束了喵。')
             return
-        c.execute('SELECT id FROM ' + tablename + ' WHERE id=? and holder=1', (update.message.chat_id,))
+        c.execute('SELECT id FROM ' + tablename + ' WHERE id=? and holder=1', (update.message.from_user.id,))
         holder = user_date.alluser.username(c.fetchone()[0])
         for member in userlist:
             c.execute('SELECT count(*) FROM ' +tablename +' WHERE id = ?', (member,))
@@ -465,10 +465,10 @@ def showlist(bot, update, args):
             c.execute('SELECT eventname FROM ENL_tianjin WHERE eventnum=?', (tablenum,))
             name=c.fetchone()[0]
             tablename = name + eventnum
-            if tablenum==0 and user_date.ENL_tianjin_HQ.user_list.inornot(update.message.chat_id):
+            if tablenum==0 and user_date.ENL_tianjin_HQ.user_list.inornot(update.message.from_user.id):
                 pass
             else:
-                c.execute('SELECT id FROM ' + tablename + ' WHERE id=? and holder=1', (update.message.chat_id,))
+                c.execute('SELECT id FROM ' + tablename + ' WHERE id=? and holder=1', (update.message.from_user.id,))
                 holder = user_date.alluser.username(c.fetchone()[0])
             c.execute('SELECT username,holder,agentname,level,'+tablename+'.id FROM '+tablename+' LEFT OUTER JOIN ENL_agent ON ENL_agent.id= '+tablename+'.id')
             result=c.fetchall()

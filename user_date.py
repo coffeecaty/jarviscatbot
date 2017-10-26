@@ -286,12 +286,12 @@ class full_usergroup(usergroup):
                 return 'unknow'
 
     def update(self, update):
-        if not self.user_list.inornot(update.message.chat_id):
+        if not self.user_list.inornot(update.message.from_user.id):
             self.username_list.list.append(
                 '@' + update.message.from_user.username)
-            self.user_list.add(update.message.chat_id)
+            self.user_list.add(update.message.from_user.id)
         else:
-            self.username_list.list[self.user_list.index(update.message.chat_id)] = (
+            self.username_list.list[self.user_list.index(update.message.from_user.id)] = (
                 '@' + update.message.from_user.username)
 
 
