@@ -6,7 +6,7 @@ import user_date
 def al_in(admin):
     def decorator(func):
         def wrapper(*args, **kw):
-            if admin.user_list.inornot(args[1].message.chat_id):
+            if admin.user_list.inornot(args[1].message.from_user.id):
                 return func(*args, **kw)
             elif admin in user_date.public.list:
                 return args[1].message.reply_text(
