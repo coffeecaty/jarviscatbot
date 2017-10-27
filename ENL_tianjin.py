@@ -738,6 +738,7 @@ def event_rm(bot, update, args):
 
 @al_in(user_date.ENL_tianjin_HQ)
 def data(bot, update, args):
+    log(update)
     conn = sqlite3.connect('jarviscatbot.db')
     c = conn.cursor()
     if args == []:
@@ -765,6 +766,7 @@ def data(bot, update, args):
 
 @al_in(user_date.me)
 def data_new(bot, update, args):
+    log(update)
     if len(args) < 2:
         bot.sendMessage(
             update.message.from_user.id,
@@ -798,6 +800,7 @@ def data_new(bot, update, args):
 
 @al_in(user_date.me)
 def data_del(bot, update, args):
+    log(update)
     if args == []:
         bot.sendMessage(update.message.from_user.id, text='请好好输入要删除的项目喵')
         return
