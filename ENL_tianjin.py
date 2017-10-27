@@ -735,3 +735,83 @@ def event_rm(bot, update, args):
             ' 中移出 ' +
             user_date.alluser.username(member))
     conn.close()
+
+@al_in(user_date.ENL_tianjin_HQ)
+def data(bot, update, args):
+    conn = sqlite3.connect('jarviscatbot.db')
+    c = conn.cursor()
+    if args == []:
+        c.execute('''SELECT id,dataname FROM ENL_HQ''')
+        result = c.fetchall()
+        text = '编号|内容'
+        for info in result:
+            text += '\n' + info[0].ljust(4) + '|' + info[1]
+        bot.sendMessage(update.message.from_user.id, text=text)
+    else:
+        for num in args:
+            try:
+                n = int(num)
+                c.execute(
+                    '''SELECT  dataname,datalink FROM ENL_HQ WHERE id=?''', (n,))
+                data = c.fetchone()
+                bot.sendMessage(
+                    update.message.from_user.id,
+                    text=data[0] + '\n' + data[1])
+            except (ValueError, TypeError):
+                bot.sendMessage(
+                    update.message.from_user.id,
+                    text='没有编号为' + num + '的项目喵')
+
+
+@al_in(user_date.me)
+def data_new(bot, update, args):
+    if len(args) < 2:
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='请按照/data_new 项目名称/编号 项目链接 的格式好好输入喵~')
+        return
+    conn = sqlite3.connect('jarviscatbot.db')
+    c = conn.cursor()
+    try:
+        id = int(args[0])
+        c.execute('''SELECT dataname FROM ENL_HQ WHERE id=?''', (id,))
+        dataname = c.fetchone()[0]
+        c.execute(
+            '''UPDATE ENL_HQ SET datalink=? WHERE eventnum=?''', (args[1], id))
+        conn.commit()
+        bot.sendMessage(
+            update.message.from_user.id,
+            text=dataname +
+            '项目的链接信息已更新完毕喵~')
+    except TypeError:
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='没有编号为' +
+            args[0] +
+            '的项目，请输入一个项目名以添加该项喵~')
+    except ValueError:
+        c.execute(
+            '''INSERT INTO ENL_HQ(dataname,datalink) VALUES(?,?) ''',
+            args[0],
+            args[1])
+        conn.commit()
+        bot.sendMessage(update.message.from_user.id, text=args[0] + '项目已添加完毕喵')
+
+
+@al_in(user_date.me)
+def data_del(bot, update, args):
+    if args == []:
+        bot.sendMessage(update.message.from_user.id, text='请好好输入要删除的项目喵')
+        return
+    conn = sqlite3.connect('jarviscatbot.db')
+    c = conn.cursor()
+    for num in args:
+        try:
+            n = int(num)
+            c.execute('''DELETE FROM ENL_HQ WHERE id=?''', (n,))
+            conn.commit()
+            bot.sendMessage(update.message.from_user.id, text='删除成功喵')
+        except (ValueError, TypeError):
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='没有编号为' + num + '的项目喵')

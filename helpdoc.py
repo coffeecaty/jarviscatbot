@@ -85,6 +85,13 @@ def help_ENL_tianjin(bot,update):
         text = text + '''
 /event_del 删除活动，格式为/event_del 活动编号1 （活动编号2...）''' + config.keyuser + '''
 /event_rm 从活动中移出特工，格式为/event_rm 活动编号 用户1 （用户2...） ''' + config.keyuser
+    if user_date.ENL_tianjin_HQ.user_list.inornot(update.message.from_user.id):
+        text += '''
+/data 显示资料链接，格式为/data (项目编号)，无参数显示全部项目列表'''
+    if user_date.me.user_list.inornot(update.message.from_user.id):
+        text += '''
+/data_new 更新资料链接，格式为/data_new 项目名称/编号 项目链接，填名称则为添加新项目，编号则为更新旧项目
+/data_del 删除资料链接，格式为/data_del 项目编号1 （项目编号2...）'''
     bot.sendMessage(update.message.from_user.id,text=text)
 
 def help(bot, update, args):
