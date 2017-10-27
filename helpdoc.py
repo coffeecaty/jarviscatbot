@@ -3,7 +3,7 @@
 import user_date,config
 
 
-def help_base(bot):
+def help_base(bot,update):
     text = '''/start 开始交互
 /help 显示帮助文档，格式为/help 模块，默认为本帮助
 /apply 申请额外模块权限，格式为/apply 模块1 （模块2...）
@@ -19,7 +19,7 @@ def help_base(bot):
         bot.sendMessage(update.message.from_user.id, text=text)
 
 
-def help_admin(bot):
+def help_admin(bot,update):
     text = '/help admin 显示本帮助'
     if user_date.me.user_list.inornot(update.message.from_user.id):
         text = text + '''
@@ -52,13 +52,13 @@ def help_admin(bot):
     text = text + '\ntotal ' + str(mod) + ' mod group'
     bot.sendMessage(update.message.from_user.id, text=text)
 
-def help_timer(bot):
+def help_timer(bot,update):
     text = '''欢迎使用timer模块功能：
 /timer 设置时间，格式为“秒 分 时 天”，以空格分隔，可由后向前缺省，如/set 60或/set 0 1均为1分钟
 /untimer 取消已设置的闹钟'''
     bot.sendMessage(update.message.from_user.id, text=text)
 
-def help_ENL_tianjin(bot):
+def help_ENL_tianjin(bot,update):
     text = '''欢迎使用ENL_tianjin模块功能，初次使用请务必先进行个人特工信息维护：
 特别提示：本模块中绝大部分对用户/活动编号操作均支持批量操作，但强烈建议一次只对一个目标进行操作，尤其是showlist功能
 /enl 个人特工信息维护，格式为/enl 特工名 特工等级'''
@@ -89,15 +89,15 @@ def help_ENL_tianjin(bot):
 
 def help(bot, update, args):
     if args == [] or args[0] == 'base':
-        help_base(bot)
+        help_base(bot,update)
     elif args[0] in (['admin'] + user_date.admin_list.namelist()) and user_date.admin_list.inany(update.message.from_user.id):
-        help_admin(update)
+        help_admin(bot,update)
     elif args[0] == 'decode':
         update.message.reply_text('还没写')
         # help_decode()
     elif args[0] in (user_date.ENL_tianjin_group.namelist()) and user_date.ENL_tianjin_group.inany(update.message.from_user.id):
-        help_ENL_tianjin(update)
+        help_ENL_tianjin(bot,update)
     elif args[0] == 'timer':
-         help_timer(update)
+         help_timer(bot,update)
     else:
         bot.sendMessage(update.message.from_user.id, text='并没有这种模块的帮助文档喵，请核对输入模块名以及你是否有该模块的使用权限。')
