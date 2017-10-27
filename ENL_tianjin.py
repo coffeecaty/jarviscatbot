@@ -791,9 +791,7 @@ def data_new(bot, update, args):
             '的项目，请输入一个项目名以添加该项喵~')
     except ValueError:
         c.execute(
-            '''INSERT INTO ENL_HQ(dataname,datalink) VALUES(?,?) ''',
-            args[0],
-            args[1])
+            '''INSERT INTO ENL_HQ(dataname,datalink) VALUES(?,?) ''',(args[0],args[1]))
         conn.commit()
         bot.sendMessage(update.message.from_user.id, text=args[0] + '项目已添加完毕喵')
 
