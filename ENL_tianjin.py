@@ -79,8 +79,7 @@ def create(bot, update, args):
          status,
          detail))
     conn.commit()
-    c.execute('SELECT count(*) FROM ENL_tianjin')
-    id = c.fetchone()[0] - 1
+    id=c.lastrowid
     tablename = name + str(id)
     c.execute(
         'CREATE TABLE ' +
@@ -154,7 +153,7 @@ def event(bot, update, args):
 
         text = text + '\n' + str(e[0]).ljust(10) + \
             '|' + e[1].ljust(name_just) + '|' + e[2].ljust(10) + '|' + join
-        bot.sendMessage(update.message.from_user.id, text=text)
+    bot.sendMessage(update.message.from_user.id, text=text)
 
 
 @al_in(user_date.ENL_tianjin)
