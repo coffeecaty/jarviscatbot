@@ -745,7 +745,7 @@ def data(bot, update, args):
         result = c.fetchall()
         text = '编号|内容'
         for info in result:
-            text += '\n' + info[0].ljust(4) + '|' + info[1]
+            text += '\n' + str(info[0]).ljust(4) + '|' + info[1]
         bot.sendMessage(update.message.from_user.id, text=text)
     else:
         for num in args:
