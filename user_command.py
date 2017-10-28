@@ -60,7 +60,7 @@ def printlist(bot, update, args):
                     update.message.from_user.id,
                     text=n.printlist('user'))
             return
-        bot.sendMessage(update.message.from_user.id, text='喵？并没有你说的这种模块块哦？0w0')
+    bot.sendMessage(update.message.from_user.id, text='喵？并没有你说的这种模块块哦？0w0')
 
 
 def apply(bot, update, args):
