@@ -400,6 +400,7 @@ def mod(bot, update, args=[]):
 
 
 def message(bot, update, args):
+    log(update)
     try:
         user = args[:args.index(':')]
         text = args[args.index(':') + 1:]
