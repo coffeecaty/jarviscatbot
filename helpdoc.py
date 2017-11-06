@@ -16,7 +16,7 @@ def help_base(bot,update):
 /repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍'''
     if user_date.me.user_list.inornot(update.message.from_user.id):
         text = text + '\n/mkdb 初始化数据库'
-        bot.sendMessage(update.message.from_user.id, text=text)
+    bot.sendMessage(update.message.from_user.id, text=text)
 
 
 def help_admin(bot,update):
