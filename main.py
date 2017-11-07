@@ -41,8 +41,8 @@ def main():
     dp.add_handler(CommandHandler('backup', user_command.backup))
     dp.add_handler(
         CommandHandler(
-            'recover',
-            user_command.recover,
+            'recovery',
+            user_command.recovery,
             pass_args=True))
     dp.add_handler(
         CommandHandler(

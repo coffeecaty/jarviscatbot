@@ -27,11 +27,11 @@ def backup(bot, update):
 
 
 @al_in(user_date.me)
-def recover(bot, update, args):
+def recovery(bot, update, args):
     log(update)
     try:
         if args[0] == config.keyuser:
-            user_date.recover()
+            user_date.recovery()
             bot.sendMessage(
                 update.message.from_user.id,
                 text='资料已经恢复完毕，有饼干吃吗？0w0')
@@ -47,20 +47,25 @@ def recover(bot, update, args):
 
 def printlist(bot, update, args):
     log(update)
-    for n in user_date.for_group:
-        if args[0] == n.name and n.admin.user_list.inornot(
-                update.message.from_user.id):
-            try:
-                bot.sendMessage(
-                    update.message.from_user.id,
-                    text=n.printlist(
-                        args[1]))
-            except IndexError:
-                bot.sendMessage(
-                    update.message.from_user.id,
-                    text=n.printlist('user'))
-            return
-    bot.sendMessage(update.message.from_user.id, text='喵？并没有你说的这种模块块哦？0w0')
+    try:
+        for n in user_date.for_group:
+            if args[0] == n.name and n.admin.user_list.inornot(
+                    update.message.from_user.id):
+                try:
+                    bot.sendMessage(
+                        update.message.from_user.id,
+                        text=n.printlist(
+                            args[1]))
+                except IndexError:
+                    bot.sendMessage(
+                        update.message.from_user.id,
+                        text=n.printlist('user'))
+                return
+        bot.sendMessage(update.message.from_user.id, text='喵？并没有你说的这种模块块哦？0w0')
+    except IndexError:
+        bot.sendMessage(
+            update.message.from_user.id,
+            text='喵？不输入模块名我可不知道你想看什么哦！0w0')
 
 
 def apply(bot, update, args):

@@ -308,7 +308,7 @@ def backup():
     f.close
 
 
-def recover():
+def recovery():
     f = open('date.txt', 'rb')
     for n in date_group:
         n.user_list = pickle.load(f)
