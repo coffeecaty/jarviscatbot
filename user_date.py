@@ -400,7 +400,7 @@ date_group = [
     ENL_tianjin_HQ,
     ENL_tianjin]
 try:
-    recover()
+    recovery()
 except EOFError:
     pass
 
