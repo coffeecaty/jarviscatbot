@@ -110,6 +110,7 @@ def main():
     dp.add_handler(CommandHandler('data', ENL_tianjin.data, pass_args=True))
     dp.add_handler(CommandHandler('data_new', ENL_tianjin.data_new, pass_args=True))
     dp.add_handler(CommandHandler('data_del', ENL_tianjin.data_del, pass_args=True))
+    dp.add_handler(CommandHandler('group_link', ENL_tianjin.group_link, pass_args=True))
 
     # from timer
     dp.add_handler(CommandHandler("timer", timer.timer,

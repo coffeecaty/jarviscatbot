@@ -816,3 +816,57 @@ def data_del(bot, update, args):
             bot.sendMessage(
                 update.message.from_user.id,
                 text='没有编号为' + num + '的项目喵')
+
+def group_link(bot,update,args):
+    log(update)
+    if  update.message.chat_id>0:
+        update.message.reply_text('本功能只能在组群中使用喵～')
+        return
+    try:
+        tablenum = int(args[0])
+    except (ValueError, IndexError):
+        update.message.reply_text('请按照/group_link 活动编号 的格式好好输入喵～')
+        return
+    admin_list=[]
+    for member in update.effective_chat.get_administrators:
+        admin_list.append(member.user)
+    if update.message.from_user not in admin_list:
+        update.message.reply_text('只有群管理员才可以使用本功能喵～')
+        return
+    if not tablenum:
+        update.message.reply_text('本活动不支持绑定组群功能喵～')
+        return
+    conn = sqlite3.connect('jarviscatbot.db')
+    c = conn.cursor()
+    c.execute(
+        'SELECT eventname FROM ENL_tianjin WHERE groupid=?', (update.message.chat_id,))
+    try:
+        al_event = c.fetchone()[0]
+        update.message.reply_text('本群已经绑定了 '+al_event+' 活动了，不能重复绑定喵～')
+        return
+    except TypeError:
+        pass
+    c.execute(
+        'SELECT eventname FROM ENL_tianjin WHERE eventnum=?', (tablenum,))
+    result = c.fetchone()
+    try:
+        tablename = result[0] + args[0]
+    except TypeError:
+        update.message.reply_text('活动不存在或者您并不是主办者喵～')
+        return
+    c.execute(
+        'SELECT holder FROM '+tablename+' WHERE id=?', (update.message.from_user.id,))
+    holder_check = c.fetchone()
+    try:
+        if not holder_check[0]:
+            update.message.reply_text('活动不存在或者您并不是主办者喵～')
+            return
+    except TypeError:
+        update.message.reply_text('活动不存在或者您并不是主办者喵～')
+        return
+    c.execute(
+        '''UPDATE ENL_tianjin SET groupid=? WHERE eventnum = ?''', (tablenum,))
+    conn.commit()
+    c.close()
+    update.message.reply_text('本群已经成功绑定 '+result[0]+' 活动喵～')
+
