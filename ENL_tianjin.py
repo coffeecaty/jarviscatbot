@@ -865,7 +865,7 @@ def group_link(bot,update,args):
         update.message.reply_text('活动不存在或者您并不是主办者喵～')
         return
     c.execute(
-        '''UPDATE ENL_tianjin SET groupid=? WHERE eventnum = ?''', (tablenum,))
+        '''UPDATE ENL_tianjin SET groupid=? WHERE eventnum = ?''', (update.message.chat_id,tablenum,))
     conn.commit()
     c.close()
     update.message.reply_text('本群已经成功绑定 '+result[0]+' 活动喵～')
