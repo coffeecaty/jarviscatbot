@@ -828,7 +828,7 @@ def group_link(bot,update,args):
         update.message.reply_text('请按照/group_link 活动编号 的格式好好输入喵～')
         return
     admin_list=[]
-    for member in update.effective_chat.get_administrators:
+    for member in update.effective_chat.get_administrators():
         admin_list.append(member.user)
     if update.message.from_user not in admin_list:
         update.message.reply_text('只有群管理员才可以使用本功能喵～')
