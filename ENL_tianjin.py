@@ -779,11 +779,11 @@ def data_new(bot, update, args):
         c.execute('''SELECT dataname FROM ENL_HQ WHERE id=?''', (id,))
         dataname = c.fetchone()[0]
         c.execute(
-            '''UPDATE ENL_HQ SET datalink=? WHERE eventnum=?''', (args[1], id))
+            '''UPDATE ENL_HQ SET datalink=? WHERE =?''', (args[1], id))
         conn.commit()
         bot.sendMessage(
             update.message.from_user.id,
-            text=dataname +
+            text=dataname +id
             '项目的链接信息已更新完毕喵~')
     except TypeError:
         bot.sendMessage(
