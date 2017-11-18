@@ -783,7 +783,7 @@ def data_new(bot, update, args):
         conn.commit()
         bot.sendMessage(
             update.message.from_user.id,
-            text=dataname +id
+            text=dataname + id +
             '项目的链接信息已更新完毕喵~')
     except TypeError:
         bot.sendMessage(
