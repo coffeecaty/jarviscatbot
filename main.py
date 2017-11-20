@@ -33,6 +33,7 @@ def main():
     dp.add_handler(CommandHandler("stc", base.stc, pass_args=True))
     dp.add_handler(CommandHandler("sts", base.sts, pass_args=True))
     dp.add_handler(CommandHandler("repeat", base.repeat, pass_args=True))
+    dp.add_handler(CommandHandler("lower", base.lower, pass_args=True))
     dp.add_handler(MessageHandler([Filters.text], base.talk))
     dp.add_handler(CommandHandler('mkdb', base.mkdb))
 

@@ -13,7 +13,8 @@ def help_base(bot,update):
 /update_mod 更新自己的模块权限信息
 /stc 给coffeecaty留言 ，格式为/stc 留言内容
 /sts 给summyxy留言 ，格式为/sts 留言内容
-/repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍'''
+/repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍
+/lower 文本小写化，格式为/lower 内容'''
     if user_date.me.user_list.inornot(update.message.from_user.id):
         text = text + '\n/mkdb 初始化数据库'
     bot.sendMessage(update.message.from_user.id, text=text)

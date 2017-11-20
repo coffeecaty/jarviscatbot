@@ -112,6 +112,11 @@ def mkdb(bot, update):
     except sqlite3.OperationalError:
         bot.sendMessage(update.message.from_user.id, text='数据库已存在，无需初始化喵~')
 
+def lower(bot, update, args):
+    text=''
+    for n in args:
+        text+=n.lower()+' '
+    update.message.reply_text(text)
 
 def talk(bot, update):
     log(update)
