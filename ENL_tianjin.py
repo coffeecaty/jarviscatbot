@@ -362,6 +362,7 @@ def holder(bot, update, args):
             if c.fetchone()[0]:
                 c.execute('UPDATE ' + tablename +
                           ' SET holder=1 WHERE id=?', (member,))
+                conn.commit()
                 bot.sendMessage(
                     update.message.from_user.id,
                     text='已成功添加 ' +
