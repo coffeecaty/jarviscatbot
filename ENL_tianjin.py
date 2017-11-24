@@ -562,12 +562,12 @@ def invite(bot, update, eventnum, userlist):
         c.execute(
             'SELECT eventname,class FROM ENL_tianjin WHERE eventnum=?', (tablenum,))
         result = c.fetchone()
-        tablename = result[0] + event
+        tablename = result[0] + eventnum
         status = result[1]
         if status == 'close':
             bot.sendMessage(
                 update.message.from_user.id,
-                text=event + ' 活动已经结束了喵。')
+                text=eventnum + ' 活动已经结束了喵。')
             return
         c.execute(
             'SELECT id FROM ' +
