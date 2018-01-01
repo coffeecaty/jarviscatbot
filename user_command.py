@@ -406,47 +406,51 @@ def mod(bot, update, args=[]):
 
 def message(bot, update, args):
     log(update)
-    try:
-        user = args[:args.index(':')]
-        text = args[args.index(':') + 1:]
-    except ValueError:
-        bot.sendMessage(update.message.from_user.id,
-                        text='请按照‘用户1 （用户2...） : 内容’的格式好好输入，小猫才能帮你发送消息哦~0w0')
-    if text == []:
-        bot.sendMessage(update.message.from_user.id, text='小猫我可不知道你想说什么~0w0')
-    user_id = []
-    for n in user:
+    if update.message.from_user.id in (
+            user_date.me.user_list.list +
+            user_date.love.user_list.list):
         try:
-            user_id.append(int(n))
+            user = args[:args.index(':')]
+            text = args[args.index(':') + 1:]
         except ValueError:
-            if user_date.alluser.chat_id(n) == 'unknow':
-                update.message.reply_text(
-                    '小猫无法在数据库中找到用户 ' + n + ' 请让他使用/start启动本猫后再试或者直接使用chat_id进行操作')
-            else:
-                user_id.append(user_date.alluser.chat_id(n))
-    if user_id == []:
-        bot.sendMessage(
-            update.message.from_user.id,
-            text='小猫我可不知道你想和谁说悄悄话哦~0w0')
-    text_message = ''
-    for n in text:
-        text_message = text_message + n + ' '
-    for m in user_id:
-        bot.sendMessage(
-            m,
-            text='message from @'+update.message.from_user.username+':\n' +
-                 text_message +
-                 '\n(at ' +
-                 str(
-                     update.message.date +
-                     timedelta(
-                         hours=8)) +
-                 'UTC+8:00)')
-        bot.sendMessage(
-            update.message.from_user.id,
-            text='已向 ' +
-            user_date.alluser.username(m) +
-            ' 成功转达消息')
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='请按照‘用户1 （用户2...） : 内容’的格式好好输入，小猫才能帮你发送消息哦~0w0')
+        if text == []:
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='小猫我可不知道你想说什么~0w0')
+        user_id = []
+        for n in user:
+            try:
+                user_id.append(int(n))
+            except ValueError:
+                if user_date.alluser.chat_id(n) == 'unknow':
+                    update.message.reply_text(
+                        '小猫无法在数据库中找到用户 ' + n + ' 请让他使用/start启动本猫后再试或者直接使用chat_id进行操作')
+                else:
+                    user_id.append(user_date.alluser.chat_id(n))
+        if user_id == []:
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='小猫我可不知道你想和谁说悄悄话哦~0w0')
+        text_message = ''
+        for n in text:
+            text_message = text_message + n + ' '
+        for m in user_id:
+            bot.sendMessage(m, text='message from @' +
+                            update.message.from_user.username +
+                            ':\n' +
+                            text_message +
+                            '\n(at ' +
+                            str(update.message.date +
+                                timedelta(hours=8)) +
+                            'UTC+8:00)')
+            bot.sendMessage(
+                update.message.from_user.id,
+                text='已向 ' +
+                user_date.alluser.username(m) +
+                ' 成功转达消息')
 
 
 @al_in(user_date.superadmin)

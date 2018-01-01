@@ -15,6 +15,8 @@ def help_base(bot,update):
 /sts 给summyxy留言 ，格式为/sts 留言内容
 /repeat 重复消息，格式为/repeat 内容（次数），默认为重要的事情说三遍
 /lower 文本小写化，格式为/lower 内容'''
+    if user_date.me.user_list.inornot(update.message.from_user.id) or user_date.love.user_list.inornot(update.message.from_user.id):
+        text = text + '\n/message 向特定特工发送留言，格式为/message 特工1 （特工2...） : 内容1 （内容2...），注意:前后均有空格'
     if user_date.me.user_list.inornot(update.message.from_user.id):
         text = text + '\n/mkdb 初始化数据库'
     bot.sendMessage(update.message.from_user.id, text=text)
