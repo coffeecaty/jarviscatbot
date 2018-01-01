@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import base,user_command,helpdoc,timer,logging,ENL_tianjin
+import base,user_command,helpdoc,timer,logging,ENL_tianjin,talk
 
 # Enable logging
 logging.basicConfig(
@@ -34,8 +34,10 @@ def main():
     dp.add_handler(CommandHandler("sts", base.sts, pass_args=True))
     dp.add_handler(CommandHandler("repeat", base.repeat, pass_args=True))
     dp.add_handler(CommandHandler("lower", base.lower, pass_args=True))
-    dp.add_handler(MessageHandler([Filters.text], base.talk))
     dp.add_handler(CommandHandler('mkdb', base.mkdb))
+
+    # commands from talk
+    dp.add_handler(MessageHandler([Filters.text], talk.talk))
 
     # from user_command
     dp.add_handler(CommandHandler('iamcat', user_command.iamcat))

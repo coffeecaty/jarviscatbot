@@ -434,7 +434,7 @@ def message(bot, update, args):
     for m in user_id:
         bot.sendMessage(
             m,
-            text='@coffeecaty:\n' +
+            text='message from @'+update.message.from_user.username+'':\n' +
                  text_message +
                  '\n(at ' +
                  str(
