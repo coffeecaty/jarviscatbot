@@ -41,7 +41,7 @@ def stc(bot, update, args):
         update.message.reply_text('已成功为您留言给coffeecaty')
         bot.sendMessage(
             user_date.me.user_list.list[0],
-            text='from:@' +
+            text='from @' +
             update.message.from_user.username +
             ':' +
             message +
@@ -64,7 +64,7 @@ def sts(bot, update, args):
         update.message.reply_text('已成功为您留言给summy')
         bot.sendMessage(
             user_date.love.user_list.list[0],
-            text='from:@' +
+            text='from @' +
             update.message.from_user.username +
             ':' +
             message +

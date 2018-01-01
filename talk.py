@@ -4,10 +4,22 @@ from logprint import log
 import user_date
 import helpdoc
 import user_command
+import re
+from datetime import timedelta
+import base
+
+def orsearch(keywords,text):
+    for word in keywords:
+        if re.search('.*'+word+'.*',text,re.I|re.M|re.S):
+            return True
+    return False
+
 
 def talk(bot, update):
     log(update)
-    if '喜欢' in update.message.text or 'love' in update.message.text or '爱' in update.message.text:
+    if orsearch(['备份.*资料'],update.message.text):
+        user_command.backup(bot,update)
+    elif orsearch(['love','爱','喜欢'],update.message.text):
         if user_date.love.user_list.inornot(update.message.from_user.id):
             bot.sendMessage(update.message.chat_id, text='小猫也爱大熊！最爱大熊了！！',
                             reply_to_message_id=update.message.message_id)
@@ -25,7 +37,7 @@ def talk(bot, update):
                 update.message.chat_id,
                 text='你喜欢谁和小猫我没什么关系，小猫只爱大熊！',
                 reply_to_message_id=update.message.message_id)
-    elif '使用帮助' in update.message.text:
+    elif orsearch(['使用.*帮助'],update.message.text):
         bot.sendMessage(update.message.chat_id, text='小猫正在替你寻找使用帮助，不要着急哦',
                         reply_to_message_id=update.message.message_id)
         for n in user_date.date_group:
@@ -36,27 +48,56 @@ def talk(bot, update):
             helpdoc.help(bot, update, ['timer'])
         else:
             helpdoc.help(bot, update, ['base'])
-    elif '申请权限' in update.message.text:
+    elif orsearch(['申请.*权限'],update.message.text):
         bot.sendMessage(update.message.chat_id, text='小猫正在替你发送你的申请，不要着急哦',
                         reply_to_message_id=update.message.message_id)
         for n in user_date.for_group:
             if n.name in update.message.text:
                 user_command.apply(bot, update, [n.name])
-    elif '屏蔽消息' in update.message.text:
+    elif orsearch(['屏蔽.*消息'],update.message.text):
         bot.sendMessage(update.message.chat_id, text='小猫正在替你处理你的要求，不要着急哦',
                         reply_to_message_id=update.message.message_id)
         for n in user_date.for_group:
             if n.name in update.message.text:
                 user_command.mute(bot, update, [n.name])
-    elif '解除屏蔽' in update.message.text:
+    elif orsearch(['解除.*屏蔽'],update.message.text):
         bot.sendMessage(update.message.chat_id, text='小猫正在替你处理你的要求，不要着急哦',
                         reply_to_message_id=update.message.message_id)
         for n in user_date.for_group:
             if n.name in update.message.text:
                 user_command.unmute(bot, update, [n.name])
-    elif '调戏' in update.message.text:
+    elif orsearch(['调戏'],update.message.text):
         bot.sendMessage(update.message.chat_id, text='调戏小猫小心被小猫咬死哦V_V',
                         reply_to_message_id=update.message.message_id)
+    elif update.message.reply_to_message is not None:
+        if orsearch(['向您申请使用.*模块的使用权限.*'],update.message.reply_to_message.text) and update.message.chat_id==update.message.from_user.id:
+            result=re.search(r'(.*)向您申请使用(.*)模块的使用权限.*',update.message.reply_to_message.text)
+            user=result.group(1)
+            modname=result.group(2)
+            for mod in user_date.for_group:
+                if mod.name==modname and (mod.name is not 'alluser'):
+                    group=mod
+                    break
+            if orsearch(['yes','agree','同意'],update.message.text):
+                user_command.add(bot,update,group,user)
+            elif orsearch(['no','refuse','拒绝'],update.message.text):
+                user_command.apply_refuse(bot,update,group,user)
+            elif update.message.datetime<update.message.reply_to_message.datetime+timedelta(hours=24):
+                    bot.sendMessage(user_date.alluser.chat_id(user), text='来自'+group.name+'管理员 @'+update.message.from_user.username+' 的留言:'+update.message.text)
+                    update.message.reply_text('已向 '+user+' 转达留言')
+            else:
+                update.message.reply_text('小猫无法识别您的操作喵！')
+        if orsearch(['from @.*at .*UTC+8:00'],update.message.reply_to_message.text):
+            result = re.search(r'.*from (.*):.*', update.message.reply_to_message.text)
+            user=result.group(1)
+            if user_date.me.user_list.inornot(update.message.from_user.id) or user_date.love.user_list.inornot(update.message.from_user.id):
+                user_command.message(bot,update,user,':',update.message.text)
+            elif user_date.me.user_list.inornot(user_date.alluser.chat_id(user)):
+                base.stc(bot,update,update.message.text)
+            elif user_date.love.user_list.inornot(user_date.alluser.chat_id(user)):
+                base.sts(bot,update,update.message.text)
+            else:
+                update.message.reply_text('小猫无法识别您的操作喵！')
     else:
         if user_date.me.user_list.inornot(update.message.from_user.id):
             bot.sendMessage(
