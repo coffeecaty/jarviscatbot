@@ -79,23 +79,23 @@ def talk(bot, update):
                     group=mod
                     break
             if orsearch(['yes','agree','同意'],update.message.text):
-                user_command.add(bot,update,group,user)
+                user_command.add(bot,update,[group.name,user])
             elif orsearch(['no','refuse','拒绝'],update.message.text):
-                user_command.apply_refuse(bot,update,group,user)
-            elif update.message.datetime<update.message.reply_to_message.datetime+timedelta(hours=24):
+                user_command.apply_refuse(bot,update,[group.name,user])
+            elif update.message.date<update.message.reply_to_message.date+timedelta(hours=24):
                     bot.sendMessage(user_date.alluser.chat_id(user), text='来自'+group.name+'管理员 @'+update.message.from_user.username+' 的留言:'+update.message.text)
                     update.message.reply_text('已向 '+user+' 转达留言')
             else:
                 update.message.reply_text('小猫无法识别您的操作喵！')
-        if orsearch(['from @.*at .*UTC+8:00'],update.message.reply_to_message.text):
-            result = re.search(r'.*from (.*):.*', update.message.reply_to_message.text)
+        if orsearch(['from @.*at .*UTC'],update.message.reply_to_message.text):
+            result = re.search(r'.*from (.*):.*at.*', update.message.reply_to_message.text,re.S)
             user=result.group(1)
             if user_date.me.user_list.inornot(update.message.from_user.id) or user_date.love.user_list.inornot(update.message.from_user.id):
-                user_command.message(bot,update,user,':',update.message.text)
+                user_command.message(bot,update,[user,':',update.message.text])
             elif user_date.me.user_list.inornot(user_date.alluser.chat_id(user)):
-                base.stc(bot,update,update.message.text)
+                base.stc(bot,update,[update.message.text])
             elif user_date.love.user_list.inornot(user_date.alluser.chat_id(user)):
-                base.sts(bot,update,update.message.text)
+                base.sts(bot,update,[update.message.text])
             else:
                 update.message.reply_text('小猫无法识别您的操作喵！')
     else:
