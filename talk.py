@@ -7,9 +7,7 @@ import user_command
 
 def talk(bot, update):
     log(update)
-    if update.message.reply_to_message.text:
-
-    elif '喜欢' in update.message.text or 'love' in update.message.text or '爱' in update.message.text:
+    if '喜欢' in update.message.text or 'love' in update.message.text or '爱' in update.message.text:
         if user_date.love.user_list.inornot(update.message.from_user.id):
             bot.sendMessage(update.message.chat_id, text='小猫也爱大熊！最爱大熊了！！',
                             reply_to_message_id=update.message.message_id)
